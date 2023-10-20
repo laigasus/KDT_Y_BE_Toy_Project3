@@ -1,0 +1,19 @@
+version: '3'
+services:
+  travel-db:
+    container_name: travel-db
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    ports:
+      - "3307:3306"
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 30s
+      retries: 3
+    networks:
+      - network
+
+networks:
+  network:
