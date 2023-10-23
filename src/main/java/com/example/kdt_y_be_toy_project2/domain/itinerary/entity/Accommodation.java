@@ -1,8 +1,6 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

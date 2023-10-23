@@ -1,5 +1,6 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.entity;
 
+import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -24,8 +25,13 @@ public class Itinerary extends BaseTimeEntity {
 
     @Embedded
     private Accommodation accommodation;
+
     @Embedded
     private Transportation transportation;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "trip_id", referencedColumnName = "trip_id")
+    private Trip trip;
 
     @Builder
     private Itinerary(Long id, Residence residence, Accommodation accommodation, Transportation transportation) {
