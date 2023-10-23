@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -33,14 +34,15 @@ public class Trip extends BaseTimeEntity {
     @Comment("여행 국내/외 여부")
     private TripDestinationEnum tripDestinationEnum;
 
-    @OneToMany
-    private List<Itinerary> itineraries;
+    @OneToMany(mappedBy = "trip")
+    private final List<Itinerary> itineraries = new ArrayList<>();
 
     @Builder
-    private Trip(String tripName, TripSchedule tripSchedule, TripDestinationEnum tripDestinationEnum, List<Itinerary> itineraries) {
+    private Trip(String tripName, TripSchedule tripSchedule, TripDestinationEnum tripDestinationEnum) {
         this.tripName = tripName;
         this.tripSchedule = tripSchedule;
         this.tripDestinationEnum = tripDestinationEnum;
-        this.itineraries = itineraries;
+        //this.itineraries = itineraries; // 이부분 날려도 되나요
     }
+
 }
