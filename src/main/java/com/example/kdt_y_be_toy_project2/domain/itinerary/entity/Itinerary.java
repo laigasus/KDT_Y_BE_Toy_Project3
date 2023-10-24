@@ -21,6 +21,9 @@ public class Itinerary extends BaseTimeEntity {
     @Comment("여정 번호(PK)")
     private Long id;
 
+    @Comment("여정 이름")
+    private String name;
+
     @Embedded
     private Residence residence;
 
@@ -35,7 +38,8 @@ public class Itinerary extends BaseTimeEntity {
     private Trip trip;
 
     @Builder
-    private Itinerary(Residence residence, Accommodation accommodation, Transportation transportation) {
+    private Itinerary(String name, Residence residence, Accommodation accommodation, Transportation transportation) {
+        this.name = name;
         this.residence = residence;
         this.accommodation = accommodation;
         this.transportation = transportation;

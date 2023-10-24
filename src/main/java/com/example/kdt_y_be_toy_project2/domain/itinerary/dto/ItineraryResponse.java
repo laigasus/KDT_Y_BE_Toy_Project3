@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record ItineraryResponse(
         @Min(1L) Long id,
+        @NotNull String name,
         @NotNull Residence residence,
         @NotNull Accommodation accommodation,
         @NotNull Transportation transportation
@@ -16,6 +17,7 @@ public record ItineraryResponse(
     public static ItineraryResponse fromEntity(Itinerary itinerary) {
         return new ItineraryResponse(
                 itinerary.getId(),
+                itinerary.getName(),
                 itinerary.getResidence(),
                 itinerary.getAccommodation(),
                 itinerary.getTransportation()
