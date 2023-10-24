@@ -38,6 +38,7 @@ public class ItineraryService {
                 .map(ItineraryRequest::toEntity)
                 .peek(itinerary -> itinerary.setTrip(trip))
                 .toList();
+        itineraryRepository.saveAll(itineraries);
 
         return itineraries.stream()
                 .map(ItineraryResponse::fromEntity)
