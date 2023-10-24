@@ -35,8 +35,7 @@ public class Itinerary extends BaseTimeEntity {
     private Trip trip;
 
     @Builder
-    private Itinerary(Long id, Residence residence, Accommodation accommodation, Transportation transportation) {
-        this.id = id;
+    private Itinerary(Residence residence, Accommodation accommodation, Transportation transportation) {
         this.residence = residence;
         this.accommodation = accommodation;
         this.transportation = transportation;
@@ -57,8 +56,8 @@ public class Itinerary extends BaseTimeEntity {
 
     // 여정 정보 수정
     public void modifyInfo(ItineraryRequest itineraryRequest) {
-        this.residence = itineraryRequest.getResidence();
-        this.accommodation = itineraryRequest.getAccommodation();
-        this.transportation = itineraryRequest.getTransportation();
+        this.residence = itineraryRequest.residence();
+        this.accommodation = itineraryRequest.accommodation();
+        this.transportation = itineraryRequest.transportation();
     }
 }
