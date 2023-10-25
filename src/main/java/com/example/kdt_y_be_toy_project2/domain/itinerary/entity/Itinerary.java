@@ -3,6 +3,7 @@ package com.example.kdt_y_be_toy_project2.domain.itinerary.entity;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryRequest;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.global.entity.BaseTimeEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -35,6 +36,7 @@ public class Itinerary extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "trip_id", referencedColumnName = "trip_id")
+    @JsonIgnore
     private Trip trip;
 
     @Builder

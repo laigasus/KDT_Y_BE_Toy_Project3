@@ -26,6 +26,7 @@ public class TripResponse {
                 .tripName(trip.getTripName())
                 .tripSchedule(trip.getTripSchedule())
                 .tripDestinationEnum(trip.getTripDestinationEnum())
+                .itineraryList(trip.getItineraries())
                 .build();
     }
 }
