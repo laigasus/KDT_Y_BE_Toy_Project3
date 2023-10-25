@@ -1,0 +1,12 @@
+PATCH http://localhost:8080/trip/{id}
+Content-Type: application/json
+
+{
+  "tripName": "새로운 여행 이름3",
+  "tripSchedule": {
+    "departureDate": "2023-12-01T00:00:00",
+    "arrivalDate": "2023-12-10T00:00:00"
+  },
+  "tripDestinationEnum": "INTERNATIONAL"
+}
+
