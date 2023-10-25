@@ -1,0 +1,13 @@
+### 여행 수정
+PATCH http://localhost:8080/trip/1
+Content-Type: application/json
+
+{
+  "tripName": "Updated Trip",
+  "timeSchedule": {
+    "startTime": "2023-02-01T00:00:00",
+    "endTime": "2023-02-10T00:00:00"
+  },
+  "tripDestinationEnum": "INTERNATIONAL",
+  "itineraries": []
+}
