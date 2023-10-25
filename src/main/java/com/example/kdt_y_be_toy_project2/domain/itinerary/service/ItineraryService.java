@@ -5,6 +5,8 @@ import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryResponse;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.repository.ItineraryRepository;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
+import com.example.kdt_y_be_toy_project2.domain.trip.error.TripNotLoadedException;
+import com.example.kdt_y_be_toy_project2.domain.trip.repository.TripRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,20 +21,14 @@ import java.util.stream.Collectors;
 public class ItineraryService {
 
     private final ItineraryRepository itineraryRepository;
-    private final EntityManager em;
+    private final TripRepository tripRepository;
 
     // 여정 다건 등록
-
-    /*
-        TODO
-        TripRepository 구현 후에
-        여정 다건 등록 수정
-     */
     @Transactional
-    public List<ItineraryResponse> insertItineraries(List<ItineraryRequest> itineraryRequestList) {
+    public List<ItineraryResponse> insertItineraries(Long tripId, List<ItineraryRequest> itineraryRequestList) {
 
-        Trip trip = Trip.builder().build();
-        em.persist(trip);
+        Trip trip = tripRepository.findById(tripId)
+                .orElseThrow(() -> new TripNotLoadedException("여행을 가져오지 못했습니다"));
 
         List<Itinerary> itineraries = itineraryRequestList.stream()
                 .map(ItineraryRequest::toEntity)
