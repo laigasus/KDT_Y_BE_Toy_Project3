@@ -7,7 +7,6 @@ import com.example.kdt_y_be_toy_project2.domain.itinerary.repository.ItineraryRe
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.error.TripNotLoadedException;
 import com.example.kdt_y_be_toy_project2.domain.trip.repository.TripRepository;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +50,7 @@ public class ItineraryService {
 
     // TripId로 여정 다건 조회
     public List<ItineraryResponse> selectItineraries(Long tripId) {
-        return itineraryRepository.findByTripId(tripId).stream()
+        return itineraryRepository.findByTripTripId(tripId).stream()
                 .map(ItineraryResponse::fromEntity)
                 .collect(Collectors.toList());
     }
