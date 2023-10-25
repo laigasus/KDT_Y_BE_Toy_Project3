@@ -1,6 +1,7 @@
 package com.example.kdt_y_be_toy_project2.domain.trip.entity;
 
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
+import com.example.kdt_y_be_toy_project2.domain.trip.dto.TripRequest;
 import com.example.kdt_y_be_toy_project2.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -8,7 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +42,12 @@ public class Trip extends BaseTimeEntity {
         this.tripName = tripName;
         this.tripSchedule = tripSchedule;
         this.tripDestinationEnum = tripDestinationEnum;
-        //this.itineraries = itineraries; // 이부분 날려도 되나요
     }
 
+    // 여행 정보 수정
+    public void modifyInfo(TripRequest tripRequest){
+        this.tripName = tripRequest.getTripName();
+        this.tripSchedule = tripRequest.getTripSchedule();
+        this.tripDestinationEnum = tripRequest.getTripDestinationEnum();
+    }
 }
