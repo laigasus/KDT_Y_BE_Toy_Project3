@@ -1,31 +1,30 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.entity;
 
-import jakarta.persistence.Embeddable;
+import com.example.kdt_y_be_toy_project2.global.entity.TimeSchedule;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
-import java.time.LocalDateTime;
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class Accommodation {
-    @Comment("숙박 숙소명")
+    @Comment("숙소명")
     private String accommodationName;
 
-    @Comment("체크인 일시")
-    private LocalDateTime accommodationCheckIn;
-
-    @Comment("체크아웃 일시")
-    private LocalDateTime accommodationCheckOut;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "startTime", column = @Column(name = "check_in")),
+            @AttributeOverride(name = "endTime", column = @Column(name = "check_out"))
+    })
+    private TimeSchedule accommodationTimeSchedule;
 
     @Builder
-    private Accommodation(String accommodationName, LocalDateTime accommodationCheckIn, LocalDateTime accommodationCheckOut) {
+    private Accommodation(String accommodationName, TimeSchedule accommodationTimeSchedule) {
         this.accommodationName = accommodationName;
-        this.accommodationCheckIn = accommodationCheckIn;
-        this.accommodationCheckOut = accommodationCheckOut;
+        this.accommodationTimeSchedule = accommodationTimeSchedule;
     }
 }
