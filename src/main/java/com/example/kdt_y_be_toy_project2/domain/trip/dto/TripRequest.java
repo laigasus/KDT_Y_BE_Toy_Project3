@@ -1,6 +1,7 @@
 package com.example.kdt_y_be_toy_project2.domain.trip.dto;
 
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
+import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.TripDestinationEnum;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.TripSchedule;
 import jakarta.validation.constraints.NotNull;
@@ -24,4 +25,12 @@ public class TripRequest {
     private TripDestinationEnum tripDestinationEnum;
 
     private List<Itinerary> itineraries;
+
+    public Trip toEntity() {
+        return Trip.builder()
+                .tripName(this.tripName)
+                .tripSchedule(this.tripSchedule)
+                .tripDestinationEnum(this.tripDestinationEnum)
+                .build();
+    }
 }
