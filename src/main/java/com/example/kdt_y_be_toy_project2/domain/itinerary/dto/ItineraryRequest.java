@@ -1,23 +1,32 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.dto;
 
+import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Residence;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Accommodation;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Residence;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Transportation;
-import jakarta.validation.constraints.NotNull;
+import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Transport;
+import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
+import com.example.kdt_y_be_toy_project2.global.entity.TimeSchedule;
 
+import java.util.List;
+
+/**
+ * DTO for {@link com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary}
+ */
 public record ItineraryRequest(
-        @NotNull String name,
-        @NotNull Residence residence,
-        @NotNull Accommodation accommodation,
-        @NotNull Transportation transportation
+        String itineraryName,
+        Trip trip,
+        List<Accommodation> accommodation,
+        List<Residence> residence,
+        List<Transport> transport,
+        TimeSchedule timeSchedule
 ) {
     public Itinerary toEntity() {
         return Itinerary.builder()
-                .name(this.name)
-                .residence(this.residence)
-                .accommodation(this.accommodation)
-                .transportation(this.transportation)
+                .itineraryName(itineraryName)
+                .cities(residence)
+                .accommodations(accommodation)
+                .transports(transport)
+                .timeSchedule(timeSchedule)
                 .build();
     }
 }
