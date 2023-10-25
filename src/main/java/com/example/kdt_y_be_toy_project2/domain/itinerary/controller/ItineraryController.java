@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/itinerary")
+@RequestMapping("itinerary")
 @RequiredArgsConstructor
 public class ItineraryController {
 
@@ -24,7 +24,7 @@ public class ItineraryController {
     }
 
     // GET 여행 일정 조회 다건
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<?> bringItineraries() {
         return ResponseEntity.status(HttpStatus.OK).body(itineraryService.selectItineraries());
     }

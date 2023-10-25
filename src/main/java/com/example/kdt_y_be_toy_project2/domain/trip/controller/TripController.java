@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/trip")
+@RequestMapping("trip")
 @RequiredArgsConstructor
 public class TripController {
 
@@ -18,21 +18,21 @@ public class TripController {
     // POST
     // 여행 일정 기록
     // BODY
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<?> addTrip(@RequestBody @Valid TripRequest tripRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(tripService.insertTrip(tripRequest));
     }
 
     // GET
     // 여행 일정 전체조회
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<?> bringAllTrips() {
         return ResponseEntity.status(HttpStatus.OK).body(tripService.selectTrips());
     }
 
     // GET
     // 여행 일정 조회 단건 {id}
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<?> bringTripById(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(tripService.selectTrip(id));
     }
@@ -40,7 +40,7 @@ public class TripController {
     // PATCH
     // 여행 정보 수정 {id}
     // Body
-    @PatchMapping("/{id}")
+    @PatchMapping("{id}")
     public ResponseEntity<?> editTrip(@PathVariable long id,
                                       @RequestBody @Valid TripRequest tripRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(tripService.updateTrip(id, tripRequest));
