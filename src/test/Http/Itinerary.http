@@ -1,0 +1,78 @@
+### 1. 여정 작성
+POST http://localhost:8080/itinerary/3
+Content-Type: application/json
+
+[
+  {
+    "name": "여정 1",
+    "residence": {
+      "residenceName": "서울",
+      "residenceDepartureTime": "2023-10-24T00:00:00",
+      "residenceArrivalTime": "2023-10-24T00:00:00"
+    },
+    "accommodation": {
+      "accommodationName": "호텔",
+      "accommodationCheckIn": "2023-10-24T00:00:00",
+      "accommodationCheckOut": "2023-10-25T00:00:00"
+    },
+    "transportation": {
+      "transportationEnum": "SUBWAY",
+      "transportationStartPoint": "서울",
+      "transportationEndPoint": "부산",
+      "transportationDepartureTime": "2023-10-24T00:00:00",
+      "transportationArrivalTime": "2023-10-24T00:00:00"
+    }
+  },
+  {
+    "name": "여정 2",
+    "residence": {
+      "residenceName": "부산",
+      "residenceDepartureTime": "2023-10-24T00:00:00",
+      "residenceArrivalTime": "2023-10-24T00:00:00"
+    },
+    "accommodation": {
+      "accommodationName": "호텔",
+      "accommodationCheckIn": "2023-10-24T00:00:00",
+      "accommodationCheckOut": "2023-10-25T00:00:00"
+    },
+    "transportation": {
+      "transportationEnum": "PLANE",
+      "transportationStartPoint": "부산",
+      "transportationEndPoint": "제주",
+      "transportationDepartureTime": "2023-10-24T00:00:00",
+      "transportationArrivalTime": "2023-10-24T00:00:00"
+    }
+  }
+]
+
+
+### 2. 여정 전체 조회
+GET http://localhost:8080/itinerary
+
+### 3. 여정 단건 조회
+GET http://localhost:8080/itinerary/1
+
+### 4. 여정 수정
+PATCH http://localhost:8080/itinerary/5
+Content-Type: application/json
+
+{
+  "trip_id": 1,
+  "residence": {
+    "residenceName": "제주",
+    "residenceDepartureTime": "2023-10-24T00:00:00",
+    "residenceArrivalTime": "2023-10-24T00:00:00"
+  },
+  "accommodation": {
+    "accommodationName": "호텔",
+    "accommodationCheckIn": "2023-10-24T00:00:00",
+    "accommodationCheckOut": "2023-10-25T00:00:00"
+  },
+  "transportation": {
+    "transportationEnum": "PLANE",
+    "transportationStartPoint": "서울",
+    "transportationEndPoint": "부산",
+    "transportationDepartureTime": "2023-10-24T00:00:00",
+    "transportationArrivalTime": "2023-10-24T00:00:00"
+  }
+}
