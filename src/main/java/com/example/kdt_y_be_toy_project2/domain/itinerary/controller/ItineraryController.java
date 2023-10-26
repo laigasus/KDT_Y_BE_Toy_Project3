@@ -40,13 +40,16 @@ public class ItineraryController {
     }
 
     // GET 여행 일정 조회 다건
-    @GetMapping("")
+    @GetMapping("trip/{id}")
     @Operation(summary = "모든 여정 조회")
+    @Parameter(
+            name = "id",
+            description = "조회하고자 하는 여정 일정들의  tripID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "모든 여정 조회 성공", content = @Content(schema = @Schema(implementation = ItineraryResponse.class))),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorMessage.class)))})
-    public ResponseEntity<?> bringItineraries() {
-        return ResponseEntity.status(HttpStatus.OK).body(itineraryService.selectItineraries());
+    public ResponseEntity<?> bringItineraries(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(itineraryService.selectItineraries(id));
     }
 
     // GET 여행 일정 조회 단건 {id}

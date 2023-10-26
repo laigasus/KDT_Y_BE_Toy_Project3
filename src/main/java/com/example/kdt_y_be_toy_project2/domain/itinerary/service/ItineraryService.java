@@ -41,14 +41,6 @@ public class ItineraryService {
                 .collect(Collectors.toList());
     }
 
-
-    // 전체 여정 조회
-    public List<ItineraryResponse> selectItineraries() {
-        return itineraryRepository.findAll().stream()
-                .map(ItineraryResponse::fromEntity)
-                .collect(Collectors.toList());
-    }
-
     // TripId로 여정 다건 조회
     public List<ItineraryResponse> selectItineraries(Long tripId) {
         return itineraryRepository.findByTripTripId(tripId).stream()
