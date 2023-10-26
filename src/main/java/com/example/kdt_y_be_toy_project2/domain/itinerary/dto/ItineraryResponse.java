@@ -4,12 +4,12 @@ import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationD
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ResidenceDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.TransportDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
-import com.example.kdt_y_be_toy_project2.global.entity.TimeSchedule;
+import com.example.kdt_y_be_toy_project2.global.dto.TimeScheduleDTO;
+import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public record ItineraryResponse(
@@ -25,15 +25,13 @@ public record ItineraryResponse(
 
         @Schema(name = "숙소", example = "호텔")
         List<AccommodationDTO> accommodation,
-
         @Schema(name = "체류지", example = "속초")
         List<ResidenceDTO> residence,
-
         @Schema(name = "교통수단", example = "버스")
         List<TransportDTO> transport,
-        @NotNull TimeSchedule timeSchedule,
-        @NotNull LocalDateTime createdAt,
-        @NotNull LocalDateTime updatedAt
+        @NotNull TimeScheduleDTO timeSchedule,
+        @NotNull String createdAt,
+        @NotNull String updatedAt
 ) {
     public static ItineraryResponse fromEntity(Itinerary itinerary) {
         return new ItineraryResponse(
@@ -43,9 +41,13 @@ public record ItineraryResponse(
                 AccommodationDTO.fromEntities(itinerary.getAccommodation()),
                 ResidenceDTO.fromEntities(itinerary.getResidence()),
                 TransportDTO.fromEntities(itinerary.getTransport()),
-                itinerary.getTimeSchedule(),
-                itinerary.getCreatedAt(),
-                itinerary.getUpdatedAt()
+                new TimeScheduleDTO(
+                        itinerary.getTimeSchedule().getStartTime(),
+                        itinerary.getTimeSchedule().getEndTime(),
+                        true
+                ),
+                TimeUtils.formatDateTime(itinerary.getCreatedAt()),
+                TimeUtils.formatDateTime(itinerary.getUpdatedAt())
         );
     }
 }

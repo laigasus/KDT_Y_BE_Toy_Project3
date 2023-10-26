@@ -1,26 +1,25 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub;
 
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Accommodation;
+import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record AccommodationDTO(
         String accommodationName,
-        LocalDateTime checkIn,
-        LocalDateTime checkOut
+        String checkIn,
+        String checkOut
 ) {
     private static AccommodationDTO fromEntity(Accommodation accommodation) {
         return new AccommodationDTO(
                 accommodation.getAccommodationName(),
-                accommodation.getAccommodationTimeSchedule().getStartTime(),
-                accommodation.getAccommodationTimeSchedule().getEndTime()
+                TimeUtils.formatDateTime(accommodation.getAccommodationTimeSchedule().getStartTime()),
+                TimeUtils.formatDateTime(accommodation.getAccommodationTimeSchedule().getEndTime())
         );
     }
 
     public static List<AccommodationDTO> fromEntities(List<Accommodation> accommodations) {
-        return accommodations.stream().map(AccommodationDTO::fromEntity).collect(Collectors.toList());
+        return accommodations.stream().map(AccommodationDTO::fromEntity).toList();
     }
 }
 
