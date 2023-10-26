@@ -3,6 +3,7 @@ package com.example.kdt_y_be_toy_project2.domain.itinerary.service;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryRequest;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryResponse;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
+import com.example.kdt_y_be_toy_project2.domain.itinerary.error.ItineraryNotLoadedException;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.repository.ItineraryRepository;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.error.TripNotLoadedException;
@@ -27,7 +28,7 @@ public class ItineraryService {
     public List<ItineraryResponse> insertItineraries(Long tripId, List<ItineraryRequest> itineraryRequestList) {
 
         Trip trip = tripRepository.findById(tripId)
-                .orElseThrow(() -> new TripNotLoadedException("여행을 가져오지 못했습니다"));
+                .orElseThrow(TripNotLoadedException::new);
 
         List<Itinerary> itineraries = itineraryRequestList.stream()
                 .map(ItineraryRequest::toEntity)
@@ -59,7 +60,7 @@ public class ItineraryService {
     public ItineraryResponse selectItinerary(Long itineraryId) {
         return itineraryRepository.findById(itineraryId)
                 .map(ItineraryResponse::fromEntity)
-                .orElse(null);
+                .orElseThrow(ItineraryNotLoadedException::new);
     }
 
     // 여정 수정
@@ -68,7 +69,7 @@ public class ItineraryService {
         return itineraryRepository.findById(id).map(itinerary -> {
             itinerary.modifyInfo(itineraryRequest);
             return ItineraryResponse.fromEntity(itinerary);
-        }).orElse(null);
+        }).orElseThrow(ItineraryNotLoadedException::new);
     }
 
 }
