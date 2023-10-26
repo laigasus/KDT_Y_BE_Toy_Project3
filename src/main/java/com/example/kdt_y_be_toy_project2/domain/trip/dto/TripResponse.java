@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
  */
 public class TripResponse {
 
-    public record CommonFields(
+
+    public record TripInfo(
             @NotNull Long tripId,
             @NotNull String tripName,
             @NotNull TimeSchedule timeSchedule,
@@ -23,8 +24,9 @@ public class TripResponse {
             @NotNull LocalDateTime createdAt,
             @NotNull LocalDateTime updatedAt) {
 
-        public static CommonFields fromEntity(Trip trip) {
-            return new CommonFields(
+
+        public static TripInfo fromEntity(Trip trip) {
+            return new TripInfo(
                     trip.getTripId(),
                     trip.getTripName(),
                     trip.getTimeSchedule(),
@@ -36,7 +38,8 @@ public class TripResponse {
     }
 
     public record AllTrips(
-            CommonFields commonFields,
+            TripInfo tripInfo,
+
             List<String> itinerariesNames) {
 
         public static AllTrips fromEntity(Trip trip) {
@@ -46,19 +49,19 @@ public class TripResponse {
                     .collect(Collectors.toList());
 
             return new AllTrips(
-                    CommonFields.fromEntity(trip),
+                    TripInfo.fromEntity(trip),
                     itinerariesNames
             );
         }
     }
 
     public record TripById(
-            CommonFields commonFields,
+            TripInfo tripInfo,
             List<Itinerary> itineraries) {
 
         public static TripById fromEntity(Trip trip) {
             return new TripById(
-                    CommonFields.fromEntity(trip),
+                    TripInfo.fromEntity(trip),
                     trip.getItineraries()
             );
         }
