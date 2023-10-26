@@ -1,9 +1,9 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.dto;
 
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Accommodation;
+import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationDTO;
+import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ResidenceDTO;
+import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.TransportDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Residence;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Transport;
 import com.example.kdt_y_be_toy_project2.global.entity.TimeSchedule;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
@@ -24,13 +24,13 @@ public record ItineraryResponse(
         Long trip_id,
 
         @Schema(name = "숙소", example = "호텔")
-        List<Accommodation> accommodation,
+        List<AccommodationDTO> accommodation,
 
         @Schema(name = "체류지", example = "속초")
-        List<Residence> residence,
+        List<ResidenceDTO> residence,
 
         @Schema(name = "교통수단", example = "버스")
-        List<Transport> transport,
+        List<TransportDTO> transport,
         @NotNull TimeSchedule timeSchedule,
         @NotNull LocalDateTime createdAt,
         @NotNull LocalDateTime updatedAt
@@ -40,9 +40,9 @@ public record ItineraryResponse(
                 itinerary.getItineraryId(),
                 itinerary.getItineraryName(),
                 itinerary.getTrip().getTripId(),
-                itinerary.getAccommodation(),
-                itinerary.getResidence(),
-                itinerary.getTransport(),
+                AccommodationDTO.fromEntities(itinerary.getAccommodation()),
+                ResidenceDTO.fromEntities(itinerary.getResidence()),
+                TransportDTO.fromEntities(itinerary.getTransport()),
                 itinerary.getTimeSchedule(),
                 itinerary.getCreatedAt(),
                 itinerary.getUpdatedAt()
