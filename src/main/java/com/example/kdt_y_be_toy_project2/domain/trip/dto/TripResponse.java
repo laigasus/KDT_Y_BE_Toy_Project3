@@ -4,6 +4,7 @@ import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.TripDestinationEnum;
 import com.example.kdt_y_be_toy_project2.global.entity.TimeSchedule;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
@@ -17,10 +18,24 @@ public class TripResponse {
 
 
     public record TripInfo(
-            @NotNull Long tripId,
-            @NotNull String tripName,
-            @NotNull TimeSchedule timeSchedule,
-            @NotNull TripDestinationEnum tripDestinationEnum,
+
+            @NotNull
+            @Schema(name = "여행 id", example = "4")
+            Long tripId,
+
+
+            @NotNull
+            @Schema(name = "여행 이름", example = "강원도 여행")
+            String tripName,
+
+            @NotNull
+            @Schema(name = "여행 날짜", example = "2023-11-11")
+            TimeSchedule timeSchedule,
+
+            @NotNull
+            @Schema(name = "여행 목적지", example = "국내")
+            TripDestinationEnum tripDestinationEnum,
+
             @NotNull LocalDateTime createdAt,
             @NotNull LocalDateTime updatedAt) {
 
@@ -39,7 +54,6 @@ public class TripResponse {
 
     public record AllTrips(
             TripInfo tripInfo,
-
             List<String> itinerariesNames) {
 
         public static AllTrips fromEntity(Trip trip) {
