@@ -18,29 +18,30 @@ public class TripService {
     private final TripRepository tripRepository;
 
     @Transactional
-    public TripResponse insertTrip(TripRequest tripRequest) {
-        return TripResponse.fromEntity(
+    public TripResponse.AllTrips insertTrip(TripRequest tripRequest) {
+        return TripResponse.AllTrips.fromEntity(
                 tripRepository.save(tripRequest.toEntity())
         );
     }
 
-    public List<TripResponse> selectTrips() {
+    public List<TripResponse.AllTrips> selectTrips() {
         return tripRepository.findAll().stream()
-                .map(TripResponse::fromEntity)
+                .map(TripResponse.AllTrips::fromEntity)
                 .toList();
     }
 
-    public TripResponse selectTrip(long id) {
+    public TripResponse.TripById selectTrip(long id) {
         return tripRepository.findById(id)
-                .map(TripResponse::fromEntity)
+                .map(TripResponse.TripById::fromEntity)
                 .orElseThrow(TripNotLoadedException::new);
+
     }
 
     @Transactional
-    public TripResponse updateTrip(long id, TripRequest tripRequest) {
+    public TripResponse.TripById updateTrip(long id, TripRequest tripRequest) {
         return tripRepository.findById(id).map(trip -> {
             trip.modifyInfo(tripRequest);
-            return TripResponse.fromEntity(trip);
+            return TripResponse.TripById.fromEntity(trip);
         }).orElseThrow(TripNotLoadedException::new);
     }
 }
