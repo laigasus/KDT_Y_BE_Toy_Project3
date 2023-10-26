@@ -1,5 +1,6 @@
 package com.example.kdt_y_be_toy_project2.domain.trip.dto;
 
+import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryResponse;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.TripDestinationEnum;
@@ -11,9 +12,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * DTO for {@link com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip}
- */
 public class TripResponse {
 
 
@@ -71,13 +69,17 @@ public class TripResponse {
 
     public record TripById(
             TripInfo tripInfo,
-            List<Itinerary> itineraries) {
+            List<ItineraryResponse> itineraries) {
 
         public static TripById fromEntity(Trip trip) {
             return new TripById(
                     TripInfo.fromEntity(trip),
-                    trip.getItineraries()
+                    TripById.convertItineriesToDTOList(trip.getItineraries())
             );
+        }
+
+        private static List<ItineraryResponse> convertItineriesToDTOList(List<Itinerary> itineraries) {
+            return itineraries.stream().map(ItineraryResponse::fromEntity).toList();
         }
     }
 }
