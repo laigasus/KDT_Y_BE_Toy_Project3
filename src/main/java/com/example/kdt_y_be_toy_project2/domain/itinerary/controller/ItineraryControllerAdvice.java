@@ -7,6 +7,8 @@ import com.example.kdt_y_be_toy_project2.domain.itinerary.error.ItineraryNotUpda
 import com.example.kdt_y_be_toy_project2.global.exception.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +16,15 @@ import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class ItineraryControllerAdvice  {
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorMessage> methodArgumentNotValidException(Exception exception) {
+        ErrorMessage message = new ErrorMessage(
+                "유효하지 않은 JSON 형태 입니다.",
+                LocalDateTime.now()
+        );
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
     @ExceptionHandler(value = {
             ItineraryNotInsertedException.class,
             ItineraryNotUpdatedException.class
