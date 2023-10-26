@@ -4,15 +4,4 @@ spring:
       core
     active: dev
 
-    cloud:
-      compatibility-verifier:
-        enabled: false
-
-    springdoc:
-      api-docs:
-        groups:
-          enabled: true
-
-      swagger-ui:
-        path: /swagger-ui.html
-        display-request-duration: true
+    
