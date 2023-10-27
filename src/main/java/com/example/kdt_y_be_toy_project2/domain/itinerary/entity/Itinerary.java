@@ -43,20 +43,20 @@ public class Itinerary extends BaseTimeEntity {
     private List<Residence> residence = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name = "transport", joinColumns = @JoinColumn(name = "itinerary_id"))
-    private List<Transport> transport = new ArrayList<>();
+    @CollectionTable(name = "activity", joinColumns = @JoinColumn(name = "itinerary_id"))
+    private List<Activity> activity = new ArrayList<>();
 
     @Embedded
     protected TimeSchedule timeSchedule;
 
     @Builder
-    private Itinerary(Long itineraryId, String itineraryName, Trip trip, List<Accommodation> accommodations, List<Residence> cities, List<Transport> transports, TimeSchedule timeSchedule) {
+    private Itinerary(Long itineraryId, String itineraryName, Trip trip, List<Accommodation> accommodations, List<Residence> residences, List<Activity> activities, TimeSchedule timeSchedule) {
         this.itineraryId = itineraryId;
         this.itineraryName = itineraryName;
         this.trip = trip;
         this.accommodation = accommodations;
-        this.residence = cities;
-        this.transport = transports;
+        this.residence = residences;
+        this.activity = activities;
         this.timeSchedule = timeSchedule;
     }
 
@@ -69,6 +69,6 @@ public class Itinerary extends BaseTimeEntity {
     public void modifyInfo(ItineraryRequest itineraryRequest) {
         this.residence = itineraryRequest.residence();
         this.accommodation = itineraryRequest.accommodation();
-        this.transport = itineraryRequest.transport();
+        this.activity = itineraryRequest.activity();
     }
 }

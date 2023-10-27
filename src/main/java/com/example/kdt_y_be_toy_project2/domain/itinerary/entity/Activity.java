@@ -11,7 +11,7 @@ import org.hibernate.annotations.Comment;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
-public class Transport {
+public class Activity {
     @Enumerated(EnumType.STRING)
     @Comment("이동수단")
     private TransportEnum transportEnum;
@@ -22,18 +22,22 @@ public class Transport {
     @Comment("도착지")
     private String arrivalPlace;
 
+    @Comment("설명")
+    private String description;
+
     @Embedded
     @AttributeOverrides({
-            @AttributeOverride(name = "startTime", column = @Column(name = "departure_time")),
-            @AttributeOverride(name = "endTime", column = @Column(name = "arrival_time"))
+            @AttributeOverride(name = "startTime", column = @Column(name = "activity_start")),
+            @AttributeOverride(name = "endTime", column = @Column(name = "activity_end"))
     })
-    private TimeSchedule transportTimeSchedule;
+    private TimeSchedule activityTimeSchedule;
 
     @Builder
-    private Transport(TransportEnum transportEnum, String departurePlace, String arrivalPlace, TimeSchedule transportTimeSchedule) {
+    private Activity(TransportEnum transportEnum, String departurePlace, String arrivalPlace, String description, TimeSchedule activityTimeSchedule) {
         this.transportEnum = transportEnum;
         this.departurePlace = departurePlace;
         this.arrivalPlace = arrivalPlace;
-        this.transportTimeSchedule = transportTimeSchedule;
+        this.description = description;
+        this.activityTimeSchedule = activityTimeSchedule;
     }
 }

@@ -2,7 +2,7 @@ package com.example.kdt_y_be_toy_project2.domain.itinerary.dto;
 
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ResidenceDTO;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.TransportDTO;
+import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ActivityDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.global.dto.TimeScheduleDTO;
 import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
@@ -29,7 +29,7 @@ public record ItineraryResponse(
         List<ResidenceDTO> residence,
         @Schema(name = "교통수단", example = "버스")
 
-        List<TransportDTO> transport,
+        List<ActivityDTO> activity,
         @NotNull TimeScheduleDTO timeSchedule,
         @NotNull String createdAt,
         @NotNull String updatedAt
@@ -41,7 +41,7 @@ public record ItineraryResponse(
                 itinerary.getTrip().getTripId(),
                 AccommodationDTO.fromEntities(itinerary.getAccommodation()),
                 ResidenceDTO.fromEntities(itinerary.getResidence()),
-                TransportDTO.fromEntities(itinerary.getTransport()),
+                ActivityDTO.fromEntities(itinerary.getActivity()),
                 new TimeScheduleDTO(
                         itinerary.getTimeSchedule().getStartTime(),
                         itinerary.getTimeSchedule().getEndTime(),

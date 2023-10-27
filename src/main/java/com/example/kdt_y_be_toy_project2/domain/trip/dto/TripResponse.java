@@ -24,11 +24,9 @@ public class TripResponse {
             @NotNull
             @Schema(name = "여행 날짜")
             TimeScheduleDTO timeSchedule,
-
-
             @NotNull
             @Schema(name = "여행 목적지", example = "국내")
-            TripDestinationEnum tripDestinationEnum,
+            String tripDestinationEnum,
             @NotNull String createdAt,
             @NotNull String updatedAt) {
 
@@ -41,7 +39,7 @@ public class TripResponse {
                             trip.getTimeSchedule().getEndTime(),
                             true
                     ),
-                    trip.getTripDestinationEnum(),
+                    trip.getTripDestinationEnum().getMethod(),
                     TimeUtils.formatDateTime(trip.getCreatedAt()),
                     TimeUtils.formatDateTime(trip.getUpdatedAt())
             );
