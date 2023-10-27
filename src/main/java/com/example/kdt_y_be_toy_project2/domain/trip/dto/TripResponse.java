@@ -23,7 +23,7 @@ public class TripResponse {
             String tripName,
             @NotNull
             @Schema(name = "여행 날짜")
-            TimeSchedule timeSchedule,
+            TimeScheduleDTO timeSchedule,
 
 
             @NotNull

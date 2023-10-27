@@ -2,9 +2,8 @@ package com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub;
 
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Transport;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.TransportEnum;
-import io.swagger.v3.oas.annotations.media.Schema;
 import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
@@ -12,17 +11,17 @@ public record TransportDTO(
         @Schema(example = "버스")
         TransportEnum transportEnum,
 
-        @Schema(name = "출발지",example = "서울")
+        @Schema(name = "출발지", example = "서울")
         String departurePlace,
 
-        @Schema(name = "도착지",example = "속초")
+        @Schema(name = "도착지", example = "속초")
         String arrivalPlace,
 
         @Schema(name = "출발 시각")
-        LocalDateTime departureTime,
+        String departureTime,
 
         @Schema(name = "도착 시각")
-        LocalDateTime arrivalTime
+        String arrivalTime
 
 ) {
     private static TransportDTO fromEntity(Transport transport) {
