@@ -22,8 +22,10 @@ public class TripResponse {
             @Schema(name = "여행 이름", example = "강원도 여행")
             String tripName,
             @NotNull
-            @Schema(name = "여행 날짜", example = "2023-11-11")
-            TimeScheduleDTO timeSchedule,
+            @Schema(name = "여행 날짜")
+            TimeSchedule timeSchedule,
+
+
             @NotNull
             @Schema(name = "여행 목적지", example = "국내")
             TripDestinationEnum tripDestinationEnum,

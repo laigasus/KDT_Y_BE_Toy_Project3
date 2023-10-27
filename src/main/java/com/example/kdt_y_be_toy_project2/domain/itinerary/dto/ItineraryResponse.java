@@ -23,11 +23,12 @@ public record ItineraryResponse(
 
         Long trip_id,
 
-        @Schema(name = "숙소", example = "호텔")
         List<AccommodationDTO> accommodation,
+
         @Schema(name = "체류지", example = "속초")
         List<ResidenceDTO> residence,
         @Schema(name = "교통수단", example = "버스")
+
         List<TransportDTO> transport,
         @NotNull TimeScheduleDTO timeSchedule,
         @NotNull String createdAt,
