@@ -21,6 +21,7 @@ public record ItineraryResponse(
         @Schema(example = "옥크나이트와 떠나는 코딩숙박")
         String itineraryName,
 
+        @Schema(hidden = true)
         Long trip_id,
 
         List<AccommodationDTO> accommodation,

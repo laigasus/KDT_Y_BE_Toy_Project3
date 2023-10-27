@@ -17,13 +17,11 @@ public record ItineraryRequest(
         @Schema(example = "옥크나이트와 떠나는 코딩숙박")
         String itineraryName,
 
+        @Schema(hidden = true)
         Trip trip,
-        @Schema(example = "호텔")
         List<Accommodation> accommodation,
 
-        @Schema(example = "속초")
         List<Residence> residence,
-        @Schema(example = "BUS")
         List<Activity> activity,
         TimeSchedule timeSchedule
 ) {
