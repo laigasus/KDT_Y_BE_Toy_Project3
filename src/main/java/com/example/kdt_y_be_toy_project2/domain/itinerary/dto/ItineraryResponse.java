@@ -22,7 +22,7 @@ public record ItineraryResponse(
         String itineraryName,
 
         @Schema(hidden = true)
-        Long trip_id,
+        Long tripId,
 
         List<AccommodationDTO> accommodation,
 
