@@ -3,7 +3,7 @@ POST http://localhost:8080/trip
 Content-Type: application/json
 
 {
-  "tripName": "My Trip",
+  "tripName": "부산 여행",
   "timeSchedule": {
     "startTime": "2023-01-01T00:00:00",
     "endTime": "2023-01-10T00:00:00"
