@@ -16,14 +16,14 @@ import java.util.List;
 public record TripRequest(
         @NotNull
         @Size(min = 1, max = 50, message = "tripName size must 1-50")
-        @Schema(name = "여행 이름", example = "강원도 여행")
+        @Schema(example = "강원도 여행")
         String tripName,
         @NotNull
-        @Schema(name = "여행 날짜", example = "2023-11-11")
         TimeSchedule timeSchedule,
         @NotNull
-        @Schema(name = "여행 목적지", example = "국내")
+        @Schema(example = "DOMESTIC")
         TripDestinationEnum tripDestinationEnum,
+        @Schema(description = "여정 일정 목록(선택 사항",hidden = true)
         List<Itinerary> itineraries
 ) {
     public Trip toEntity() {
