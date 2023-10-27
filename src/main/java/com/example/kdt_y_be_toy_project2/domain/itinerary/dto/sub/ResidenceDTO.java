@@ -9,9 +9,9 @@ import java.util.List;
 public record ResidenceDTO(
         @Schema(name = "체류지 이름", example = "속초")
         String residenceName,
-        @Schema(name = "거주 기간")
+        @Schema(name = "거주 기간",example = "2023-11-11-00:00")
         String stayTime,
-        @Schema(name = "떠나는 기간")
+        @Schema(name = "떠나는 기간", example = "2023-11-12-00:00")
         String leaveTime
 
 ) {
