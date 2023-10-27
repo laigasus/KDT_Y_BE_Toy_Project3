@@ -14,16 +14,16 @@ import java.util.List;
  * DTO for {@link com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary}
  */
 public record ItineraryRequest(
-        @Schema(name = "여정 이름", example = "옥크나이트와 떠나는 코딩숙박")
+        @Schema(example = "옥크나이트와 떠나는 코딩숙박")
         String itineraryName,
 
         Trip trip,
-        @Schema(name = "숙소", example = "호텔")
+        @Schema(example = "호텔")
         List<Accommodation> accommodation,
 
-        @Schema(name = "체류지", example = "속초")
+        @Schema(example = "속초")
         List<Residence> residence,
-        @Schema(name = "교통수단", example = "버스")
+        @Schema(example = "BUS")
         List<Activity> activity,
         TimeSchedule timeSchedule
 ) {

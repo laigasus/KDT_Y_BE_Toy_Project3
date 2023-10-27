@@ -1,5 +1,6 @@
 package com.example.kdt_y_be_toy_project2.domain.trip.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

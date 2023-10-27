@@ -16,16 +16,14 @@ public class TripResponse {
 
     public record TripInfo(
             @Positive
-            @Schema(name = "여행 id", example = "4")
+            @Schema(example = "4")
             Long tripId,
             @NotNull
-            @Schema(name = "여행 이름", example = "강원도 여행")
+            @Schema(example = "강원도 여행")
             String tripName,
             @NotNull
-            @Schema(name = "여행 날짜")
             TimeScheduleDTO timeSchedule,
             @NotNull
-            @Schema(name = "여행 목적지", example = "국내")
             String tripDestinationEnum,
             @NotNull String createdAt,
             @NotNull String updatedAt) {

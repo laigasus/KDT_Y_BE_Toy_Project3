@@ -1,8 +1,8 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.dto;
 
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationDTO;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ResidenceDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ActivityDTO;
+import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ResidenceDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.global.dto.TimeScheduleDTO;
 import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
@@ -14,11 +14,11 @@ import java.util.List;
 
 public record ItineraryResponse(
         @Min(1L)
-        @Schema(name = "여정 아이디", example = "7")
+        @Schema(example = "7")
         Long id,
 
         @NotNull
-        @Schema(name = "여정 이름", example = "옥크나이트와 떠나는 코딩숙박")
+        @Schema(example = "옥크나이트와 떠나는 코딩숙박")
         String itineraryName,
 
         Long trip_id,

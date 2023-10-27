@@ -7,12 +7,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 public record AccommodationDTO(
-        @Schema(name = "호텔 이름", example = "롯데 호텔")
+        @Schema(example = "롯데 호텔")
         String accommodationName,
 
-        @Schema(name = "체크인 시간",example = "2023-11-11-16:00")
+        @Schema(example = "2023-11-11-16:00")
         String checkIn,
-        @Schema(name = "체크 아웃 시간",example = "2023-11-12-13:00")
+        @Schema(example = "2023-11-12-13:00")
         String checkOut
 
 ) {

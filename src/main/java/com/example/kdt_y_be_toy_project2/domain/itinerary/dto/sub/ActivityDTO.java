@@ -10,19 +10,19 @@ public record ActivityDTO(
         @Schema(example = "버스")
         String transportEnum,
 
-        @Schema(name = "출발지", example = "서울")
+        @Schema( example = "서울")
         String departurePlace,
 
-        @Schema(name = "도착지", example = "속초")
+        @Schema( example = "속초")
         String arrivalPlace,
 
-        @Schema(name = "설명", example = " 서울에서 버스 타고 속초 도착후 점심 먹고 체크인 대기")
+        @Schema(example = " 서울에서 버스 타고 속초 도착후 점심 먹고 체크인 대기")
         String description,
 
-        @Schema(name = "출발 시각",example = "2023-11-11-9:30")
+        @Schema(example = "2023-11-11-9:30")
         String activityStart,
 
-        @Schema(name = "도착 시각", example = "2023-11-11-12:30")
+        @Schema( example = "2023-11-11-12:30")
         String activityEnd
 
 ) {
