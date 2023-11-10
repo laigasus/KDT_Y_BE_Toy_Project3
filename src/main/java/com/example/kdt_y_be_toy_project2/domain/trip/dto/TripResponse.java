@@ -3,7 +3,6 @@ package com.example.kdt_y_be_toy_project2.domain.trip.dto;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryResponse;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
-import com.example.kdt_y_be_toy_project2.domain.trip.entity.TripDestinationEnum;
 import com.example.kdt_y_be_toy_project2.global.dto.TimeScheduleDTO;
 import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -39,6 +39,12 @@ dependencies {
     //swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //test db - h2
+    runtimeOnly 'com.h2database:h2'
+
+    // yml
+    implementation 'org.yaml:snakeyaml:+'
     
 }
 
