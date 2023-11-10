@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
 /**
- * DTO for {@link com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary}
+ * DTO for {@link Itinerary}
  */
 public record ItineraryRequest(
         @Schema(example = "옥크나이트와 떠나는 코딩숙박")

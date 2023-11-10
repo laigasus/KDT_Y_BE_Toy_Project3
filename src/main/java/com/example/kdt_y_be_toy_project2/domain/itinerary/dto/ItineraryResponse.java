@@ -1,8 +1,8 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.dto;
 
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ActivityDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ResidenceDTO;
+import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.global.dto.TimeScheduleDTO;
 import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;

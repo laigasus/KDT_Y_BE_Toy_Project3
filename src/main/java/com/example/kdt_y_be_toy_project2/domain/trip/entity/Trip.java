@@ -1,6 +1,8 @@
 package com.example.kdt_y_be_toy_project2.domain.trip.entity;
 
+import com.example.kdt_y_be_toy_project2.domain.comment.entity.TripComment;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
+import com.example.kdt_y_be_toy_project2.domain.like.entity.UserLike;
 import com.example.kdt_y_be_toy_project2.domain.trip.dto.TripRequest;
 import com.example.kdt_y_be_toy_project2.global.entity.BaseTimeEntity;
 import com.example.kdt_y_be_toy_project2.global.entity.TimeSchedule;
@@ -38,6 +40,12 @@ public class Trip extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "trip")
     private final List<Itinerary> itineraries = new ArrayList<>();
+
+    @OneToMany(mappedBy = "trip")
+    private final List<TripComment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "trip")
+    private final List<UserLike> userLikes = new ArrayList<>();
 
     @Builder
     private Trip(Long tripId, String tripName, TimeSchedule timeSchedule, TripDestinationEnum tripDestinationEnum) {
