@@ -13,6 +13,7 @@ public record TripCommentAddResponse(
         @Positive Long tripCommentId,
         @NotNull Long tripId,
         @NotNull Long userId,
+        @NotNull String username,
         @NotBlank String tripComment,
         @Future String createdAt
 ) {
@@ -21,6 +22,7 @@ public record TripCommentAddResponse(
                 tripComment.getTripCommentId(),
                 tripComment.getTrip().getTripId(),
                 tripComment.getUser().getUserId(),
+                tripComment.getUser().getUsername(),
                 tripComment.getTripComment(),
                 TimeUtils.formatDateTime(tripComment.getCreatedAt())
         );
