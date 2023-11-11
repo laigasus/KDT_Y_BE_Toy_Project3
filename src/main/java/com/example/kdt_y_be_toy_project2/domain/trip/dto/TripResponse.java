@@ -1,7 +1,6 @@
 package com.example.kdt_y_be_toy_project2.domain.trip.dto;
 
 import com.example.kdt_y_be_toy_project2.domain.comment.dto.TripCommentGetResponse;
-import com.example.kdt_y_be_toy_project2.domain.comment.entity.TripComment;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryResponse;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
