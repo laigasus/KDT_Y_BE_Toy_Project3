@@ -1,13 +1,18 @@
 package com.example.kdt_y_be_toy_project2.domain.comment.service;
 
 import com.example.kdt_y_be_toy_project2.domain.comment.dto.*;
+import com.example.kdt_y_be_toy_project2.domain.comment.error.InvalidTripException;
 import com.example.kdt_y_be_toy_project2.domain.comment.repository.TripCommentRepository;
+import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.repository.TripRepository;
+import com.example.kdt_y_be_toy_project2.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly=true)
@@ -15,6 +20,7 @@ import java.util.List;
 public class TripCommentServiceImpl implements TripCommentService{
     private final TripCommentRepository tripCommentRepository;
     private final TripRepository tripRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<TripCommentGetResponse> bringTripComments(long tripId){
@@ -27,14 +33,17 @@ public class TripCommentServiceImpl implements TripCommentService{
     @Transactional
     public TripCommentAddResponse insertTripComment(
             long tripId,
-            TripCommentAddRequest tripCommentAddRequest
+            TripCommentAddRequest tripCommentAddRequest,
+            long userid
     ){
-        if(tripRepository.findById(tripId).isPresent()){
+        Optional<Trip> tripOptional = tripRepository.findById(tripId);
+        if(tripOptional.isPresent()){
             return TripCommentAddResponse.fromEntity(
-                    tripCommentRepository.save(tripCommentAddRequest.toEntity())
-            );
+                    tripCommentRepository.save(tripCommentAddRequest.toEntity(
+                            userRepository.findByUserId(userid),tripOptional.get())
+            ));
         } else {
-            throw new RuntimeException("실패!!!!!!");
+            throw new InvalidTripException();
         }
     }
 

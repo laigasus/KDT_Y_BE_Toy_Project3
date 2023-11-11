@@ -22,9 +22,11 @@ public class TripCommentController {
     @PostMapping("")
     public ResponseEntity<?> addComment(
             @PathVariable long tripId,
-            @RequestBody @Valid TripCommentAddRequest tripCommentAddRequest
+            @RequestBody @Valid TripCommentAddRequest tripCommentAddRequest,
+            // TODO : jwt토큰에서 userid를 받는 방식으로 교체필요
+            @RequestParam long userid
     ) {
-        return ResponseEntity.ok(tripCommentService.insertTripComment(tripId, tripCommentAddRequest));
+        return ResponseEntity.ok(tripCommentService.insertTripComment(tripId, tripCommentAddRequest,userid));
     }
 
     @PatchMapping("/{commentId}")
