@@ -1,0 +1,11 @@
+### 회원가입
+POST http://localhost:8080/user/signup
+Content-Type: application/json
+
+{
+  "email": "liyusang1@naver.com",
+  "username": "liyusang1",
+  "password": "123456"
+}
+
+
