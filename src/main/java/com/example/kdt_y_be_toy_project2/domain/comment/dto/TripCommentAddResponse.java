@@ -11,16 +11,18 @@ import jakarta.validation.constraints.Positive;
 
 public record TripCommentAddResponse(
         @Positive Long tripCommentId,
-        @NotNull Trip trip,
-        @NotNull User user,
+        @NotNull Long tripId,
+        @NotNull Long userId,
+        @NotNull String username,
         @NotBlank String tripComment,
         @Future String createdAt
 ) {
     public static TripCommentAddResponse fromEntity(TripComment tripComment) {
         return new TripCommentAddResponse(
                 tripComment.getTripCommentId(),
-                tripComment.getTrip(),
-                tripComment.getUser(),
+                tripComment.getTrip().getTripId(),
+                tripComment.getUser().getUserId(),
+                tripComment.getUser().getUsername(),
                 tripComment.getTripComment(),
                 TimeUtils.formatDateTime(tripComment.getCreatedAt())
         );

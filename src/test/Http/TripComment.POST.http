@@ -1,0 +1,7 @@
+### 댓글추가
+POST http://localhost:8080/trip/1/comments?userid=1
+Content-Type: application/json
+
+{
+  "tripComment": "즐거운여행입니다."
+}

@@ -1,5 +1,6 @@
 package com.example.kdt_y_be_toy_project2.domain.trip.dto;
 
+import com.example.kdt_y_be_toy_project2.domain.comment.dto.TripCommentGetResponse;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryResponse;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
@@ -62,12 +63,14 @@ public class TripResponse {
 
     public record TripById(
             TripInfo tripInfo,
-            List<ItineraryResponse> itineraries) {
+            List<ItineraryResponse> itineraries,
+            List<TripCommentGetResponse> tripComments) {
 
-        public static TripById fromEntity(Trip trip) {
+        public static TripById fromEntity(Trip trip, List<TripCommentGetResponse> tripCommentGetResponses) {
             return new TripById(
                     TripInfo.fromEntity(trip),
-                    TripById.convertItineriesToDTOList(trip.getItineraries())
+                    TripById.convertItineriesToDTOList(trip.getItineraries()),
+                    tripCommentGetResponses
             );
         }
 
