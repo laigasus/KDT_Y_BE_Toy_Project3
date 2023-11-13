@@ -1,12 +1,14 @@
 package com.example.kdt_y_be_toy_project2.domain.user.controller;
 
 import com.example.kdt_y_be_toy_project2.domain.user.dto.CreateUserRequest;
-import com.example.kdt_y_be_toy_project2.domain.user.dto.LoginRequest;
-import com.example.kdt_y_be_toy_project2.domain.user.service.UserServiceImpl;
+import com.example.kdt_y_be_toy_project2.domain.user.dto.CreateUserResponse;
+import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
+import com.example.kdt_y_be_toy_project2.domain.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,19 +16,19 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody @Valid CreateUserRequest createUserRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userServiceImpl.signup(createUserRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.signup(createUserRequest));
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest loginRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userServiceImpl.login(loginRequest));
+    @GetMapping("/test")
+    public ResponseEntity<?> test(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+
+        CreateUserResponse createUserResponse = new CreateUserResponse(user.getEmail(), user.getUsername());
+        return ResponseEntity.ok(createUserResponse);
     }
-
-
-
 
 }
