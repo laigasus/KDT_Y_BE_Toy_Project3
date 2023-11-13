@@ -4,8 +4,7 @@ import lombok.Data;
 
 @Data
 public class Place {
-        String adr_address;
         String formatted_address;
-        String formatted_phone_number;
+        //String international_phone_number;
         String name;
 }

@@ -3,5 +3,5 @@ spring:
     include:
       core
     active: dev
-
-    
+  api:
+    key: ${GOOGLE_MAP_API_KEY}

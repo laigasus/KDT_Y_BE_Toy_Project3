@@ -1,45 +1,37 @@
 package com.example.kdt_y_be_toy_project2.global.util.api.service;
 
 import com.example.kdt_y_be_toy_project2.global.util.api.dto.Place;
-import com.example.kdt_y_be_toy_project2.global.util.api.dto.PlaceDTO;
 import com.example.kdt_y_be_toy_project2.global.util.api.dto.PlacesSearchStatus;
 import com.example.kdt_y_be_toy_project2.global.util.api.dto.PlacesTextSearchResponse;
-import com.example.kdt_y_be_toy_project2.global.util.api.repository.GoogleRepository;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
-@AllArgsConstructor
 @Service
 public class GoogleService {
 
-    private final GoogleRepository googleRepository;
+    @Value("${spring.api.key}")
+    private String apiKey;
 
-    public PlacesTextSearchResponse searchResponse(String keyword) {
-        List<Place> places = googleRepository.findByKeyword(keyword);
-        if (places.isEmpty()) {
-            throw new NotFoundException("검색결과 없음");
-        }
+    private final RestTemplate restTemplate;
 
-        List<PlaceDTO> placeDTOs = places.stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-
-        PlacesTextSearchResponse response = new PlacesTextSearchResponse();
-        response.setPlaces(placeDTOs);
-        return response;
+    public GoogleService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
-    private PlaceDTO convertToDTO(Place place) {
-        return PlaceDTO.fromPlace(place);
+    public List<Place> searchPlaces(String keyword) {
+        String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + keyword +
+                "&key=" + apiKey;
+
+        PlacesTextSearchResponse response = restTemplate.getForObject(url, PlacesTextSearchResponse.class);
+
+        if (response != null && response.getStatus().equals(PlacesSearchStatus.OK)) {
+            return response.getResults();
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
