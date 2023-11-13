@@ -1,8 +1,8 @@
 package com.example.kdt_y_be_toy_project2.global.util.api.dto;
 
-import lombok.Data;
+import lombok.Setter;
 
-@Data
+@Setter
 public class PlaceDTO {
     private String formattedAddress;
     //private String internationalPhoneNumber;
@@ -11,7 +11,7 @@ public class PlaceDTO {
 
     public static PlaceDTO fromPlace(Place place) {
         PlaceDTO placeDTO = new PlaceDTO();
-        placeDTO.setFormattedAddress(place.getFormatted_address());
+        placeDTO.setFormattedAddress(place.getFormattedAddress());
        // placeDTO.setInternationalPhoneNumber(place.getInternational_phone_number());
         placeDTO.setName(place.getName());
 

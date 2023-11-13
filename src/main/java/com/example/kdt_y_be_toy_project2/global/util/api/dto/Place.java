@@ -1,10 +1,14 @@
 package com.example.kdt_y_be_toy_project2.global.util.api.dto;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
-@Data
+@Getter
 public class Place {
-        String formatted_address;
+        @JsonProperty("formatted_address")
+        String formattedAddress;
         //String international_phone_number;
         String name;
+
 }
+

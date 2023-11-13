@@ -18,12 +18,14 @@ public class GoogleService {
 
     private final RestTemplate restTemplate;
 
+    private static final String GoogleMapURL = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=";
+
     public GoogleService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     public List<Place> searchPlaces(String keyword) {
-        String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + keyword +
+        String url = GoogleMapURL + keyword +
                 "&key=" + apiKey;
 
         PlacesTextSearchResponse response = restTemplate.getForObject(url, PlacesTextSearchResponse.class);
