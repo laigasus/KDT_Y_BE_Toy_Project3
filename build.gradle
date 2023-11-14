@@ -51,6 +51,9 @@ dependencies {
 
     // yml
     implementation 'org.yaml:snakeyaml:+'
+
+    // dotenv-java
+    implementation 'io.github.cdimascio:java-dotenv:5.2.2'
     
 }
 
