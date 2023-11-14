@@ -1,6 +1,9 @@
 package com.example.kdt_y_be_toy_project2.domain.comment.service;
 
 import com.example.kdt_y_be_toy_project2.domain.comment.dto.*;
+import com.example.kdt_y_be_toy_project2.domain.comment.entity.TripComment;
+import com.example.kdt_y_be_toy_project2.domain.comment.error.InvalidAccessToUpdateTripComment;
+import com.example.kdt_y_be_toy_project2.domain.comment.error.InvalidTripCommentIdException;
 import com.example.kdt_y_be_toy_project2.domain.comment.error.InvalidTripException;
 import com.example.kdt_y_be_toy_project2.domain.comment.repository.TripCommentRepository;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -66,11 +70,21 @@ public class TripCommentServiceImpl implements TripCommentService {
             PrincipalDetails principalDetails
     ) {
         CheckUserLogined.checkUserLogined(principalDetails);
-        //TODO : user.id 와 댓글 작성자가 일치하는지 확인
-        return tripCommentRepository.findById(commentId).map(tripComment -> {
+
+        Optional<TripComment> tripCommentOptional = tripCommentRepository.findById(commentId);
+
+        if (tripCommentOptional.isPresent()) {
+            TripComment tripComment = tripCommentOptional.get();
+
+            if (!Objects.equals(principalDetails.getUser().getUserId(), tripComment.getUser().getUserId())) {
+                throw new InvalidAccessToUpdateTripComment();
+            }
+
             tripComment.editTripComment(commentUpdateRequest);
             return TripCommentUpdateResponse.fromEntity(tripComment);
-        }).orElseThrow(RuntimeException::new);
+        } else {
+            throw new InvalidTripCommentIdException();
+        }
     }
 
     @Override
