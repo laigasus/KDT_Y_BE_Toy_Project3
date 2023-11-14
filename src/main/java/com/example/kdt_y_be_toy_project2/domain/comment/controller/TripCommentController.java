@@ -3,9 +3,11 @@ package com.example.kdt_y_be_toy_project2.domain.comment.controller;
 import com.example.kdt_y_be_toy_project2.domain.comment.dto.TripCommentAddRequest;
 import com.example.kdt_y_be_toy_project2.domain.comment.dto.TripCommentUpdateRequest;
 import com.example.kdt_y_be_toy_project2.domain.comment.service.TripCommentService;
+import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,27 +25,37 @@ public class TripCommentController {
     public ResponseEntity<?> addComment(
             @PathVariable long tripId,
             @RequestBody @Valid TripCommentAddRequest tripCommentAddRequest,
-            // TODO : jwt토큰에서 userid를 받는 방식으로 교체필요
-            @RequestParam long userid
+            @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
-        return ResponseEntity.ok(tripCommentService.insertTripComment(tripId, tripCommentAddRequest,userid));
+            return ResponseEntity.ok(tripCommentService.insertTripComment(
+                    tripId,
+                    tripCommentAddRequest,
+                    principalDetails
+            ));
     }
 
     @PatchMapping("/{commentId}")
     public ResponseEntity<?> editComment(
             @PathVariable long tripId,
             @PathVariable long commentId,
-            @RequestBody @Valid TripCommentUpdateRequest commentUpdateRequest
+            @RequestBody @Valid TripCommentUpdateRequest commentUpdateRequest,
+            @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
-        return ResponseEntity.ok(tripCommentService.updateTripComment(tripId, commentId, commentUpdateRequest));
+        return ResponseEntity.ok(tripCommentService.updateTripComment(
+                tripId,
+                commentId,
+                commentUpdateRequest,
+                principalDetails
+        ));
     }
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity<?> deleteComment(
             @PathVariable long tripId,
-            @PathVariable long commentId
+            @PathVariable long commentId,
+            @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
-        tripCommentService.deleteTripComment(tripId, commentId);
+        tripCommentService.deleteTripComment(tripId, commentId, principalDetails);
         return ResponseEntity.noContent().build();
     }
 }

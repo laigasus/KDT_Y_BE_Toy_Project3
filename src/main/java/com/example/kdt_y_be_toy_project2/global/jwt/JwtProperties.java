@@ -1,4 +1,4 @@
-package com.example.kdt_y_be_toy_project2.domain.jwt;
+package com.example.kdt_y_be_toy_project2.global.jwt;
 
 /**
  * JWT 기본 설정값
