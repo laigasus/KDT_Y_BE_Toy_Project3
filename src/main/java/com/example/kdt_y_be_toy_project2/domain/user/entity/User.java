@@ -1,16 +1,15 @@
 package com.example.kdt_y_be_toy_project2.domain.user.entity;
 
-import com.example.kdt_y_be_toy_project2.domain.like.entity.UserLike;
 import com.example.kdt_y_be_toy_project2.global.entity.BaseTimeEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,11 +31,8 @@ public class User extends BaseTimeEntity {
     @Comment("회원 비밀번호")
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private final List<UserLike> userLikes = new ArrayList<>();
-
     @Builder
-    public User(String email, String username, String password,String authority) {
+    public User(String email, String username, String password, String authority) {
         this.email = email;
         this.username = username;
         this.password = password;
