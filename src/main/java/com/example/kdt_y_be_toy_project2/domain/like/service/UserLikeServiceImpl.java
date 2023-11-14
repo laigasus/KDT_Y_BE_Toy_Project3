@@ -1,17 +1,21 @@
 package com.example.kdt_y_be_toy_project2.domain.like.service;
 
+import com.example.kdt_y_be_toy_project2.domain.like.dto.DeleteUserLikeResponse;
+import com.example.kdt_y_be_toy_project2.domain.like.dto.UserLikeAddTripResponse;
 import com.example.kdt_y_be_toy_project2.domain.like.dto.UserLikeGetTripsResponse;
 import com.example.kdt_y_be_toy_project2.domain.like.entity.UserLike;
 import com.example.kdt_y_be_toy_project2.domain.like.repository.UserLikeRepository;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.error.TripNotLoadedException;
 import com.example.kdt_y_be_toy_project2.domain.trip.repository.TripRepository;
-import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
+import com.example.kdt_y_be_toy_project2.global.config.CheckUserLogined;
+import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -23,41 +27,55 @@ public class UserLikeServiceImpl implements UserLikeService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserLikeGetTripsResponse> bringUserLike(User user) {
+    public List<UserLikeGetTripsResponse> bringUserLike(PrincipalDetails principalDetails) {
 
-        return userLikeRepository.findByUser(user).stream()
+        return userLikeRepository.findByUser(principalDetails.getUser()).stream()
                 .map(UserLikeGetTripsResponse::fromEntity)
                 .toList();
     }
 
     @Override
     @Transactional
-    public Long addUserLike(User user, Long tripId) {
+    public UserLikeAddTripResponse addUserLike(PrincipalDetails principalDetails, Long tripId) {
 
         Optional<Trip> tripOptional = tripRepository.findById(tripId);
+        CheckUserLogined.checkUserLogined(principalDetails);
 
+        //여행을 가져오지 못하는경우
         if (tripOptional.isEmpty()) {
             throw new TripNotLoadedException();
         }
+        UserLike like = UserLike.like(principalDetails.getUser(), tripOptional.get());
 
-        UserLike like = UserLike.like(user, tripOptional.get());
-        userLikeRepository.save(like);
+        //이미 좋아요 눌렀으면 좋아요 테이블에 또 생성하면 안 됨 -> 좋아요 가져올때 중복적으로 가죠옴
+        Optional<UserLike> userLikeOptional = userLikeRepository.findByUserAndTripTripId(principalDetails.getUser(), tripId);
+        if (userLikeOptional.isPresent()) {
+            return new UserLikeAddTripResponse(
+                    like.getTrip().getTripId(),
+                    like.getUser().getUserId(),
+                    "이미 해당 여행에 좋아요가 생성 되어 있습니다.");
+        }
 
-        return like.getUserLikeId();
+        return UserLikeAddTripResponse.fromEntity(userLikeRepository.save(like), tripId + "번 여행 좋아요 요청 성공");
     }
 
     @Override
     @Transactional
-    public void removeUserLike(User user, Long tripId) {
+    public DeleteUserLikeResponse removeUserLike(PrincipalDetails principalDetails, Long tripId) {
 
-        Optional<UserLike> userLike = userLikeRepository.findByUserAndTripTripId(user, tripId);
+        Optional<UserLike> userLike = userLikeRepository.findByUserAndTripTripId(principalDetails.getUser(), tripId);
 
         if (userLike.isEmpty()) {
-            throw new TripNotLoadedException();
+            return DeleteUserLikeResponse.fromEntity("해당 여행에 등록된 좋아요가 없으므로 삭제할 좋아요가 없습니다.");
+        }
+
+        if (!Objects.equals(userLike.get().getUser().getUserId(), principalDetails.getUser().getUserId())) {
+            return DeleteUserLikeResponse.fromEntity(
+                    "좋아요를 해제할 권한이 없습니다 -> 좋아요를 등록한 사용자가 아닙니다.");
         }
 
         userLike.get().delete();
-
         userLikeRepository.delete(userLike.get());
+        return DeleteUserLikeResponse.fromEntity("좋아요 삭제 성공");
     }
 }

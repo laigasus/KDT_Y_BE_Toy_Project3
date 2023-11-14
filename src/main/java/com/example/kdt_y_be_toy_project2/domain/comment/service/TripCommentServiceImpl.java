@@ -6,6 +6,7 @@ import com.example.kdt_y_be_toy_project2.domain.comment.repository.TripCommentRe
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.repository.TripRepository;
 import com.example.kdt_y_be_toy_project2.domain.user.repository.UserRepository;
+import com.example.kdt_y_be_toy_project2.global.config.CheckUserLogined;
 import com.example.kdt_y_be_toy_project2.global.exception.InvalidPrincipalDetailsException;
 import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
@@ -42,8 +43,7 @@ public class TripCommentServiceImpl implements TripCommentService {
             TripCommentAddRequest tripCommentAddRequest,
             PrincipalDetails principalDetails
     ) {
-        checkUserLogined(principalDetails);
-
+        CheckUserLogined.checkUserLogined(principalDetails);
         long userId=principalDetails.getUser().getUserId();
 
         Optional<Trip> tripOptional = tripRepository.findById(tripId);
@@ -65,8 +65,7 @@ public class TripCommentServiceImpl implements TripCommentService {
             TripCommentUpdateRequest commentUpdateRequest,
             PrincipalDetails principalDetails
     ) {
-        checkUserLogined(principalDetails);
-
+        CheckUserLogined.checkUserLogined(principalDetails);
         //TODO : user.id 와 댓글 작성자가 일치하는지 확인
         return tripCommentRepository.findById(commentId).map(tripComment -> {
             tripComment.editTripComment(commentUpdateRequest);
@@ -80,15 +79,8 @@ public class TripCommentServiceImpl implements TripCommentService {
             long commentId,
             PrincipalDetails principalDetails
     ) {
-        checkUserLogined(principalDetails);
-
+        CheckUserLogined.checkUserLogined(principalDetails);
         tripCommentRepository.deleteById(commentId);
         return true;
-    }
-
-    private static void checkUserLogined(PrincipalDetails principalDetails) {
-        if(principalDetails ==null){
-            throw new InvalidPrincipalDetailsException();
-        }
     }
 }

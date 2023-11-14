@@ -6,13 +6,15 @@ import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
 import jakarta.validation.constraints.NotNull;
 
 public record UserLikeAddTripResponse(
-    @NotNull Trip trip,
-    @NotNull User user
+    @NotNull Long tripId,
+    @NotNull Long userId,
+    String message
 ) {
-    public static UserLikeAddTripResponse fromEntity(UserLike userLike) {
+    public static UserLikeAddTripResponse fromEntity(UserLike userLike,String message) {
         return new UserLikeAddTripResponse(
-                userLike.getTrip(),
-                userLike.getUser()
+                userLike.getTrip().getTripId(),
+                userLike.getUser().getUserId(),
+                message
         );
     }
 }
