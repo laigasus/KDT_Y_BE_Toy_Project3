@@ -15,10 +15,8 @@ spring:
 
   data:
     redis:
-      host: redis-16455.c294.ap-northeast-1-2.ec2.cloud.redislabs.com
-      port: 16455
-      username: default
-      password: gp7K4WWGW9WpRyWiuSisrjwcvxXibpBm
+      host: travel-redis
+      port: 6379
 
 
   jpa:
