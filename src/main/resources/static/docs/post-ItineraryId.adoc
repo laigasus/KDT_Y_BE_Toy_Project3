@@ -1,0 +1,17 @@
+== 여행 일정 추가 API
+
+=== HTTP 요청
+
+include::{snippets}/post-ItineraryId/http-request.adoc[]
+
+=== HTTP 응답
+
+include::{snippets}/post-ItineraryId/http-response.adoc[]
+
+=== 요청 필드
+
+include::{snippets}/post-ItineraryId/request-fields.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/post-ItineraryId/response-fields.adoc[]

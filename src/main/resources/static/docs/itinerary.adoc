@@ -1,0 +1,5 @@
+
+include::post-ItineraryId.adoc[]
+include::bring-all-itinerary.adoc[]
+include::get-one-ItineraryId.adoc[]
+include::patch-itinerary-id.adoc[]
