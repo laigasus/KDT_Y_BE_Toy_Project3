@@ -27,8 +27,14 @@ import java.util.List;
 @Component
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private final JwtProvider jwtProvider;
+
+    public JwtAuthenticationFilter(
+            AuthenticationManager authenticationManager,
+            JwtProvider jwtProvider
+    ) {
         super.setAuthenticationManager(authenticationManager);
+        this.jwtProvider = jwtProvider;
     }
 
     /**
@@ -69,10 +75,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             Authentication authResult
     ) throws IOException {
         User user = ((PrincipalDetails) authResult.getPrincipal()).getUser();
-        String token = JwtUtils.createToken(user);
+        String token = jwtProvider.createToken(user);
         // 쿠키 생성
         Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, token);
-        cookie.setMaxAge(JwtProperties.EXPIRATION_TIME); // 쿠키의 만료시간 설정
+        cookie.setMaxAge(JwtProperties.ACCESS_TOKEN_EXPIRATION_TIME / 1000 * 2); // 쿠키의 만료시간은 jwt토큰의 만료시간보다 김 -> setMaxAge는 초단위
         cookie.setPath("/");
         response.addCookie(cookie);
         response.sendRedirect("/");  //발급후 redirect로 이동
