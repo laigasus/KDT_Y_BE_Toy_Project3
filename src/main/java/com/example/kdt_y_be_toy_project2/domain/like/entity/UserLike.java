@@ -4,14 +4,12 @@ import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
 import com.example.kdt_y_be_toy_project2.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Entity
 @Comment("좋아요")
 public class UserLike extends BaseTimeEntity {
@@ -30,29 +28,23 @@ public class UserLike extends BaseTimeEntity {
     private User user;
 
     // 좋아요 클릭
-    public static UserLike click(Trip trip, User user){
+    public static UserLike like(User user, Trip trip) {
         UserLike userLike = new UserLike();
-        userLike.setTrip(trip);
-        userLike.setUser(user);
+        userLike.setTripAndUser(trip, user);
 
         return userLike;
     }
 
-    public void setTrip(Trip trip){
+    // Trip과 User에 해당하는 UserLike 연관관계 삭제
+    public void delete() {
+        this.trip.getUserLikes().remove(this);
+    }
+
+    public void setTripAndUser(Trip trip, User user) {
         this.trip = trip;
+        this.user = user;
+
         trip.getUserLikes().add(this);
     }
-
-    public void setUser(User user){
-        this.user = user;
-        user.getUserLikes().add(this);
-    }
-
-    @Builder
-    private UserLike(Trip trip, User user) {
-        this.trip = trip;
-        this.user = user;
-    }
-
 
 }
