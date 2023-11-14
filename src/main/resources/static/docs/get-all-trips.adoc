@@ -1,0 +1,20 @@
+== 모든 여행 일정 조회 API
+
+=== HTTP 요청
+
+include::{snippets}/get-all-trips/http-request.adoc[]
+
+=== HTTP 응답
+
+include::{snippets}/get-all-trips/http-response.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/get-all-trips/response-fields.adoc[]
+
+여행 일정을 조회하는 API입니다. 해당 API는 저장된 모든 여행 일정의 정보를 반환합니다.
+
+응답은 여행 일정의 배열 형태로 제공되며, 각 여행 일정은 여행 ID, 여행 이름, 여행 시작 및 종료 시간, 여행지 유형, 생성 및 업데이트 날짜 및 시간, 그리고 관련된 여행 일정 이름 목록을 포함합니다.
+
+이 문서는 여행 일정 조회 API의 응답 형식과 구조를 설명합니다.
+

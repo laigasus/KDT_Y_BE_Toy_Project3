@@ -1,0 +1,23 @@
+== 여행 추가 API
+
+여행 추가 API는 새로운 여행을 생성하는 데 사용됩니다.
+
+=== HTTP 요청
+
+include::{snippets}/add-trip-one/http-request.adoc[]
+
+=== HTTP 응답
+
+include::{snippets}/add-trip-one/http-response.adoc[]
+
+=== 요청 필드
+
+여행을 추가하기 위해 필요한 요청 필드입니다.
+
+include::{snippets}/add-trip-one/request-fields.adoc[]
+
+=== 응답 필드
+
+API 응답에서 반환되는 필드에 대한 설명입니다.
+
+include::{snippets}/add-trip-one/response-fields.adoc[]
