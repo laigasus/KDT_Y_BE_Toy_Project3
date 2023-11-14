@@ -2,5 +2,5 @@ POST http://localhost:8080/userLike
 Content-Type: application/json
 
 {
-  "tripId": 2
+  "tripId": 1
 }

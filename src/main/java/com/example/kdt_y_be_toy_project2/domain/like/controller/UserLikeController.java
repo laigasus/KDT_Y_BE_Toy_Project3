@@ -4,10 +4,12 @@ import com.example.kdt_y_be_toy_project2.domain.like.dto.UserLikeAddTripRequest;
 import com.example.kdt_y_be_toy_project2.domain.like.dto.UserLikeRemoveTripRequest;
 import com.example.kdt_y_be_toy_project2.domain.like.service.UserLikeService;
 import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
+import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,28 +21,22 @@ public class UserLikeController {
     @PostMapping("")
     public ResponseEntity<?> addUserLike(
             @RequestBody @Valid UserLikeAddTripRequest userLikeAddTripRequest,
-            Authentication authentication
+            @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
-        User user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(userLikeService.addUserLike(user, userLikeAddTripRequest.tripId()));
+        return ResponseEntity.ok(userLikeService.addUserLike(principalDetails, userLikeAddTripRequest.tripId()));
     }
 
-
     @GetMapping("")
-    public ResponseEntity<?> getUserLike(Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        return ResponseEntity.ok(userLikeService.bringUserLike(user));
+    public ResponseEntity<?> getUserLike(
+            @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        return ResponseEntity.ok(userLikeService.bringUserLike(principalDetails));
     }
 
     @DeleteMapping("")
     public ResponseEntity<?> removeUserLike(
             @RequestBody @Valid UserLikeRemoveTripRequest userLikeRemoveTripRequest,
-            Authentication authentication
+            @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
-
-        User user = (User) authentication.getPrincipal();
-        userLikeService.removeUserLike(user, userLikeRemoveTripRequest.tripId());
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(userLikeService.removeUserLike(principalDetails, userLikeRemoveTripRequest.tripId()));
     }
-
 }
