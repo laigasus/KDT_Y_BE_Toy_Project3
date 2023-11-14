@@ -1,7 +1,8 @@
-package com.example.kdt_y_be_toy_project2.domain.jwt;
+package com.example.kdt_y_be_toy_project2.global.jwt;
 
 import com.example.kdt_y_be_toy_project2.domain.user.dto.LoginRequest;
 import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
+import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.Cookie;
@@ -12,11 +13,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * JWT를 이용한 로그인 인증
@@ -45,7 +48,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     loginRequest.email(),
                     loginRequest.password(),
-                    new ArrayList<>()
+                    new ArrayList<>(List.of(new SimpleGrantedAuthority("ROLE_USER")))
             );
 
             return this.getAuthenticationManager().authenticate(authenticationToken);
@@ -65,7 +68,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             FilterChain chain,
             Authentication authResult
     ) throws IOException {
-        User user = (User) authResult.getPrincipal();
+        User user = ((PrincipalDetails) authResult.getPrincipal()).getUser();
         String token = JwtUtils.createToken(user);
         // 쿠키 생성
         Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, token);

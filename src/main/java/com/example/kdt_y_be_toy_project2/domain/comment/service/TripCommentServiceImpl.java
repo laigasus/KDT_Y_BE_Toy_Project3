@@ -6,8 +6,9 @@ import com.example.kdt_y_be_toy_project2.domain.comment.repository.TripCommentRe
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.repository.TripRepository;
 import com.example.kdt_y_be_toy_project2.domain.user.repository.UserRepository;
+import com.example.kdt_y_be_toy_project2.global.exception.InvalidPrincipalDetailsException;
+import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,13 +40,17 @@ public class TripCommentServiceImpl implements TripCommentService {
     public TripCommentAddResponse insertTripComment(
             long tripId,
             TripCommentAddRequest tripCommentAddRequest,
-            long userid
+            PrincipalDetails principalDetails
     ) {
+        checkUserLogined(principalDetails);
+
+        long userId=principalDetails.getUser().getUserId();
+
         Optional<Trip> tripOptional = tripRepository.findById(tripId);
         if (tripOptional.isPresent()) {
             return TripCommentAddResponse.fromEntity(
                     tripCommentRepository.save(tripCommentAddRequest.toEntity(
-                            userRepository.findByUserId(userid), tripOptional.get())
+                            userRepository.findByUserId(userId), tripOptional.get())
                     ));
         } else {
             throw new InvalidTripException();
@@ -57,8 +62,12 @@ public class TripCommentServiceImpl implements TripCommentService {
     public TripCommentUpdateResponse updateTripComment(
             long tripId,
             long commentId,
-            TripCommentUpdateRequest commentUpdateRequest
+            TripCommentUpdateRequest commentUpdateRequest,
+            PrincipalDetails principalDetails
     ) {
+        checkUserLogined(principalDetails);
+
+        //TODO : user.id 와 댓글 작성자가 일치하는지 확인
         return tripCommentRepository.findById(commentId).map(tripComment -> {
             tripComment.editTripComment(commentUpdateRequest);
             return TripCommentUpdateResponse.fromEntity(tripComment);
@@ -68,10 +77,18 @@ public class TripCommentServiceImpl implements TripCommentService {
     @Override
     public boolean deleteTripComment(
             long tripId,
-            long commentId
+            long commentId,
+            PrincipalDetails principalDetails
     ) {
-        tripCommentRepository.deleteById(commentId);
+        checkUserLogined(principalDetails);
 
+        tripCommentRepository.deleteById(commentId);
         return true;
+    }
+
+    private static void checkUserLogined(PrincipalDetails principalDetails) {
+        if(principalDetails ==null){
+            throw new InvalidPrincipalDetailsException();
+        }
     }
 }

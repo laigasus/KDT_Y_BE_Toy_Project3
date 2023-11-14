@@ -1,6 +1,7 @@
-package com.example.kdt_y_be_toy_project2.domain.jwt;
+package com.example.kdt_y_be_toy_project2.global.jwt;
 
 import com.example.kdt_y_be_toy_project2.domain.user.repository.UserRepository;
+import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -65,10 +66,11 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         String email = JwtUtils.getEmail(token);
         if (email != null) {
             return userRepository.findByEmail(email)
-                    .map(user -> new UsernamePasswordAuthenticationToken(
-                            user, // principal
+                    .map(PrincipalDetails::new)
+                    .map(principalDetails -> new UsernamePasswordAuthenticationToken(
+                            principalDetails, // principal
                             null, // credentials
-                            user.getAuthorities()
+                            principalDetails.getAuthorities()
                     )).orElseThrow(IllegalAccessError::new);
         }
         return null; // 유저가 없으면 NULL

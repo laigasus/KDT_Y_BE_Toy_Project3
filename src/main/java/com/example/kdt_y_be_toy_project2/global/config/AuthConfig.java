@@ -1,6 +1,7 @@
-package com.example.kdt_y_be_toy_project2.domain.config;
+package com.example.kdt_y_be_toy_project2.global.config;
 
 import com.example.kdt_y_be_toy_project2.domain.user.repository.UserRepository;
+import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +10,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -49,8 +49,9 @@ public class AuthConfig {
         return new BCryptPasswordEncoder();
     }
 
-    private UserDetails loadUserByUsername(String email) {
+    private PrincipalDetails loadUserByUsername(String email) {
         return userRepository.findByEmail(email)
+                .map(PrincipalDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

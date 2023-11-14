@@ -1,7 +1,7 @@
 ### 댓글추가
-POST http://localhost:8080/trip/1/comments?userid=1
+POST http://localhost:8080/trip/1/comments
 Content-Type: application/json
 
 {
-  "tripComment": "즐거운여행입니다."
+  "tripComment": "즐거운여행입니다. 여행테스트"
 }

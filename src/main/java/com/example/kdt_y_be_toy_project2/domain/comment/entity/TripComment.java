@@ -4,6 +4,7 @@ import com.example.kdt_y_be_toy_project2.domain.comment.dto.TripCommentUpdateReq
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
 import com.example.kdt_y_be_toy_project2.global.entity.BaseTimeEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,6 +24,7 @@ public class TripComment extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "trip_id")
+    @JsonIgnore
     private Trip trip;
 
     @Comment("리뷰")

@@ -1,8 +1,7 @@
-package com.example.kdt_y_be_toy_project2.domain.config;
+package com.example.kdt_y_be_toy_project2.global.config;
 
-import com.example.kdt_y_be_toy_project2.domain.jwt.JwtAuthenticationFilter;
-import com.example.kdt_y_be_toy_project2.domain.jwt.JwtAuthorizationFilter;
-import com.example.kdt_y_be_toy_project2.domain.jwt.JwtProperties;
+import com.example.kdt_y_be_toy_project2.global.jwt.JwtAuthenticationFilter;
+import com.example.kdt_y_be_toy_project2.global.jwt.JwtAuthorizationFilter;
 import com.example.kdt_y_be_toy_project2.global.util.CustomResponseUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -58,6 +57,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/itinerary/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/user/signup")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/login/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/trip/{tripId}/comments")).permitAll()
                         .anyRequest().authenticated()
         );
 

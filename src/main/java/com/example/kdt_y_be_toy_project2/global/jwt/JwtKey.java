@@ -1,4 +1,4 @@
-package com.example.kdt_y_be_toy_project2.domain.jwt;
+package com.example.kdt_y_be_toy_project2.global.jwt;
 
 import io.jsonwebtoken.security.Keys;
 import org.springframework.data.util.Pair;

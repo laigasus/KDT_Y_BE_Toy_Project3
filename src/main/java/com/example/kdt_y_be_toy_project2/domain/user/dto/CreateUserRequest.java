@@ -21,6 +21,7 @@ public record CreateUserRequest (
                 .email(email)
                 .username(username)
                 .password(passwordEncoder.encode(password))
+                .authority("ROLE_USER")
                 .build();
     }
 }
