@@ -1,0 +1,19 @@
+== 여정 수정 API
+
+
+
+=== HTTP 요청
+
+include::{snippets}/patch-itinerary-id/http-request.adoc[]
+
+=== HTTP 응답
+
+include::{snippets}/patch-itinerary-id/http-response.adoc[]
+
+=== 요청 필드
+
+include::{snippets}/patch-itinerary-id/request-fields.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/patch-itinerary-id/response-fields.adoc[]

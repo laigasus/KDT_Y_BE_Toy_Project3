@@ -1,0 +1,21 @@
+== 여행 일정 수정 API
+
+=== HTTP 요청
+
+include::{snippets}/edit-trip/http-request.adoc[]
+
+=== HTTP 응답
+
+include::{snippets}/edit-trip/http-response.adoc[]
+
+=== 경로 매개변수
+
+include::{snippets}/edit-trip/path-parameters.adoc[]
+
+=== 요청 필드
+
+include::{snippets}/edit-trip/request-fields.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/edit-trip/response-fields.adoc[]
