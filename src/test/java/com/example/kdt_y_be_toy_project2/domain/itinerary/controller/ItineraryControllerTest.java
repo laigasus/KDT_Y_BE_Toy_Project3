@@ -130,33 +130,6 @@ public class ItineraryControllerTest {
         objectMapper.registerModule(new JavaTimeModule());
 
 
-        Accommodation accommodation = Accommodation.builder()
-                .accommodationName("신라 스테이 해운대")
-                .accommodationTimeSchedule(new TimeSchedule(LocalDateTime.parse("2023-10-27T15:00:00"), LocalDateTime.parse("2023-10-28T18:00:00")))
-                .build();
-
-        Residence residence = Residence.builder()
-                .residenceName("부산")
-                .residenceTimeSchedule(new TimeSchedule(LocalDateTime.parse("2023-10-27T15:00:00"), LocalDateTime.parse("2023-10-28T18:00:00")))
-                .build();
-
-        Activity activity = Activity.builder()
-                .transportEnum(TransportEnum.KTX)
-                .departurePlace("집")
-                .arrivalPlace("부산역")
-                .description("KTX타고 부산 도착")
-                .activityTimeSchedule(new TimeSchedule(LocalDateTime.parse("2023-01-02T14:00:00"), LocalDateTime.parse("2023-01-03T11:00:00")))
-                .build();
-
-        ItineraryRequest itineraryRequest = new ItineraryRequest(
-                "옥크나이트와 떠나는 코딩숙박",
-                List.of(accommodation),
-                List.of(residence),
-                List.of(activity),
-                new TimeSchedule(LocalDateTime.parse("2023-10-28T13:05:00"), LocalDateTime.parse("2023-10-28T11:15:00"))
-        );
-
-
     }
 
 
