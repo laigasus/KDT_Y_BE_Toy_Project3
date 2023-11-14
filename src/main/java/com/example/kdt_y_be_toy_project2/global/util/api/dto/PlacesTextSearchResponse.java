@@ -1,19 +1,12 @@
 package com.example.kdt_y_be_toy_project2.global.util.api.dto;
 
-import lombok.Data;
+import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
 public class PlacesTextSearchResponse {
+    private List<Place> results;
+    private PlacesSearchStatus status;
 
-    public List<Place> places = new ArrayList<>();
-
-    public List<String> html_attributions;
-    public List<Place> results;
-    public PlacesSearchStatus status;
-
-    public void setPlaces(List<PlaceDTO> placeDTOs) {
-    }
 }

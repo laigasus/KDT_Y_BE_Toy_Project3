@@ -4,8 +4,6 @@ import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
 import jakarta.validation.constraints.NotNull;
 
 public record CreateUserResponse(
-
-
         @NotNull
         String email,
 

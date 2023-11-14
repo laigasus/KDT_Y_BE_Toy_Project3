@@ -1,17 +1,18 @@
 package com.example.kdt_y_be_toy_project2.domain.like.service;
 
-import com.example.kdt_y_be_toy_project2.domain.like.dto.*;
+import com.example.kdt_y_be_toy_project2.domain.like.dto.DeleteUserLikeResponse;
+import com.example.kdt_y_be_toy_project2.domain.like.dto.UserLikeAddTripResponse;
+import com.example.kdt_y_be_toy_project2.domain.like.dto.UserLikeGetTripsResponse;
+import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
+import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 
 import java.util.List;
 
 public interface UserLikeService {
 
-    // 북마크 조회
-    List<UserLikeGetTripsResponse> bringUserLike(long userId);
+    List<UserLikeGetTripsResponse> bringUserLike(PrincipalDetails principalDetails);
 
-    // 북마크 추가
-    UserLikeAddTripResponse addUserLike(UserLikeAddTripRequest userLikeAddTripRequest);
+    UserLikeAddTripResponse addUserLike(PrincipalDetails principalDetails, Long tripId);
 
-    // 북마크 삭제
-    boolean removeUserLike(UserLikeRemoveTripRequest likeRemoveTripRequest);
+    DeleteUserLikeResponse removeUserLike(PrincipalDetails principalDetails, Long tripId);
 }

@@ -8,14 +8,11 @@ public record LoginRequest(
         @NotNull
         String email,
         @NotNull
-        String username,
-        @NotNull
         String password
 ) {
     public User toEntity() {
         return User.builder()
                 .email(email)
-                .username(username)
                 .password(password)
                 .build();
     }

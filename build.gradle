@@ -37,9 +37,20 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     //rest-docs
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor' // (3)
     testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.2')
     testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.2')
+    
+    
+    
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // jjwt
+    implementation 'io.jsonwebtoken:jjwt-api:+'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:+'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:+'
+
 
     //swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:+'
@@ -51,6 +62,10 @@ dependencies {
     // yml
     implementation 'org.yaml:snakeyaml:+'
 
+
+    // dotenv-java
+    implementation 'io.github.cdimascio:java-dotenv:+'
+    
 }
 
 tasks.named('test') {
