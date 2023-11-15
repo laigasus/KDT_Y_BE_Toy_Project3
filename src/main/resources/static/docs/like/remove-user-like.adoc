@@ -1,0 +1,19 @@
+== 사용자 좋아요 삭제 API
+
+사용자가 특정 여행에 대한 좋아요를 삭제하는 API에 대한 문서입니다.
+
+=== HTTP 요청
+
+include::{snippets}/remove-user-like/http-request.adoc[]
+
+=== HTTP 응답
+
+include::{snippets}/remove-user-like/http-response.adoc[]
+
+=== 요청 필드
+
+include::{snippets}/remove-user-like/request-fields.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/remove-user-like/response-fields.adoc[]

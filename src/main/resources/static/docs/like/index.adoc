@@ -1,0 +1,11 @@
+= Spring REST Docs like API Test
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:seclinks:
+
+
+include::add-user-like.adoc[]
+include::get-user-like.adoc[]
+include::remove-user-like.adoc[]
