@@ -57,6 +57,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/user/signup")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/login/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/trip/{tripId}/comments")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/places/search/**")).permitAll()
                         .anyRequest().authenticated()
         );
 
