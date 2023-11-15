@@ -1,0 +1,23 @@
+== 여행 코멘트 수정 API
+
+여행 코멘트를 수정하는 API에 대한 문서입니다.
+
+=== HTTP 요청
+
+include::{snippets}/edit-comment/http-request.adoc[]
+
+=== HTTP 응답
+
+include::{snippets}/edit-comment/http-response.adoc[]
+
+=== 요청 경로 변수
+
+include::{snippets}/edit-comment/path-parameters.adoc[]
+
+=== 요청 필드
+
+include::{snippets}/edit-comment/request-fields.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/edit-comment/response-fields.adoc[]

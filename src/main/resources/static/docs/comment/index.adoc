@@ -1,0 +1,12 @@
+= Spring REST Docs comment API Test
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:seclinks:
+
+
+include::add-comment.adoc[]
+include::bring-comments.adoc[]
+include::delete-comment.adoc[]
+include::edit-comment.adoc[]
