@@ -1,0 +1,23 @@
+== 여행 코멘트 추가 API
+
+여행 코멘트를 추가하는 API에 대한 문서입니다.
+
+=== HTTP요청
+
+include::{snippets}/add-comment/http-request.adoc[]
+
+=== HTTP응답
+
+include::{snippets}/add-comment/http-response.adoc[]
+
+=== 요청 경로 변수
+
+include::{snippets}/add-comment/path-parameters.adoc[]
+
+=== 요청 필드
+
+include::{snippets}/add-comment/request-fields.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/add-comment/response-fields.adoc[]

@@ -1,0 +1,19 @@
+== 여행 코멘트 조회 API
+
+여행 코멘트를 조회하는 API에 대한 문서입니다.
+
+=== HTTP요청
+
+include::{snippets}/bring-comments/http-request.adoc[]
+
+=== HTTP응답
+
+include::{snippets}/bring-comments/http-response.adoc[]
+
+=== 요청 경로 변수
+
+include::{snippets}/bring-comments/path-parameters.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/bring-comments/response-fields.adoc[]

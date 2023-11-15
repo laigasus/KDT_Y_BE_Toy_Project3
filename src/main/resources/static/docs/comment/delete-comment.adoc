@@ -1,0 +1,19 @@
+== 여행 코멘트 삭제 API
+
+여행 코멘트를 삭제하는 API에 대한 문서입니다.
+
+=== HTTP 요청
+
+include::{snippets}/delete-comment/http-request.adoc[]
+
+=== HTTP 응답
+
+include::{snippets}/delete-comment/http-response.adoc[]
+
+=== 요청 경로 변수
+
+include::{snippets}/delete-comment/path-parameters.adoc[]
+
+=== 응답 본문
+
+include::{snippets}/delete-comment/response-body.adoc[]
