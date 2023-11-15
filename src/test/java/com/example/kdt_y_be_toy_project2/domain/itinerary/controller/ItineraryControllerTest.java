@@ -1,5 +1,7 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.controller;
 
+import com.example.kdt_y_be_toy_project2.domain.itinerary.MockItineraryRequest;
+import com.example.kdt_y_be_toy_project2.domain.itinerary.MockItineraryResponse;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryRequest;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryResponse;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationDTO;
@@ -55,63 +57,11 @@ public class ItineraryControllerTest {
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    List<ItineraryRequest> itineraryRequestList = new ArrayList<>();
+    private List<ItineraryRequest> itineraryRequestList = new ArrayList<>();
 
+    private MockItineraryResponse mockItineraryResponse;
 
-    List<Accommodation> accommodations = List.of(
-            Accommodation.builder()
-                    .accommodationName("신라 스테이 해운대 수정test")
-                    .accommodationTimeSchedule(new TimeSchedule(
-                            LocalDateTime.parse("2023-10-27T15:00:00"),
-                            LocalDateTime.parse("2023-10-28T18:00:00")))
-                    .build()
-
-    );
-
-    List<Residence> residences = List.of(
-            Residence.builder()
-                    .residenceName("부산")
-                    .residenceTimeSchedule(new TimeSchedule(
-                            LocalDateTime.parse("2023-10-27T15:00:00"),
-                            LocalDateTime.parse("2023-10-28T18:00:00")))
-                    .build()
-
-    );
-
-
-    List<Activity> activities = List.of(
-            Activity.builder()
-                    .transportEnum(TransportEnum.KTX)
-                    .departurePlace("집")
-                    .arrivalPlace("부산역")
-                    .description("KTX타고 드디어 부산입성!")
-                    .activityTimeSchedule(new TimeSchedule(
-                            LocalDateTime.parse("2023-01-02T14:00:00"),
-                            LocalDateTime.parse("2023-01-03T11:00:00")))
-                    .build(),
-
-            Activity.builder()
-                    .transportEnum(TransportEnum.CAR)
-                    .departurePlace("부산역")
-                    .arrivalPlace("해운대 블루라인파크")
-                    .description("스카이캡슐 타서 경치보기")
-                    .activityTimeSchedule(new TimeSchedule(
-                            LocalDateTime.parse("2023-10-27T13:20:00"),
-                            LocalDateTime.parse("2023-10-27T14:00:00")))
-                    .build()
-
-    );
-
-    ItineraryRequest itineraryRequest = new ItineraryRequest(
-            "부산 수정test",
-            accommodations,
-            residences,
-            activities,
-            new TimeSchedule(
-                    LocalDateTime.parse("2023-10-28T13:05:00"),
-                    LocalDateTime.parse("2023-10-28T11:15:00"))
-    );
-
+    private MockItineraryRequest mockItineraryRequest;
 
     private MockMvc mockMvc;
 
@@ -133,78 +83,14 @@ public class ItineraryControllerTest {
     }
 
 
-    private ItineraryResponse createMockItineraryResponse() {
-
-        List<AccommodationDTO> mockAccommodations = List.of(
-                new AccommodationDTO(
-                        "신라 스테이 해운대 수정test",
-                        "2023-10-27T15:00:00",
-                        "2023-10-28T18:00:00"
-                )
-
-        );
-
-
-        List<ResidenceDTO> mockResidences = List.of(
-                new ResidenceDTO(
-                        "부산",
-                        "2023-10-27T15:00:00",
-                        "2023-10-28T18:00:00"
-                )
-
-        );
-
-
-        List<ActivityDTO> mockActivities = List.of(
-                new ActivityDTO(
-                        "KTX",
-                        "집",
-                        "부산역",
-                        "KTX타고 드디어 부산입성!",
-                        "2023-01-02T14:00:00",
-                        "2023-01-03T11:00:00",
-                        "부산역"
-                ),
-                new ActivityDTO(
-                        "CAR",
-                        "부산역",
-                        "해운대 블루라인파크",
-                        "스카이캡슐 타서 경치보기",
-                        "2023-10-27T13:20:00",
-                        "2023-10-27T14:00:00",
-                        "해운대 블루라인파크"
-                )
-
-        );
-
-
-        TimeScheduleDTO mockTimeSchedule = new TimeScheduleDTO(
-                "2023-10-28T13:05:00",
-                "2023-10-28T11:15:00"
-        );
-
-
-        return new ItineraryResponse(
-                7L,
-                "부산 수정test",
-                1L,
-                mockAccommodations,
-                mockResidences,
-                mockActivities,
-                mockTimeSchedule,
-                "2023-01-01T00:00:00",
-                "2023-01-02T00:00:00"
-        );
-    }
-
 
     @Test
     void addItineraryTest() throws Exception {
-        ItineraryResponse mockResponse2 = createMockItineraryResponse();
+        ItineraryResponse mockResponse2 = mockItineraryResponse.create();
         Mockito.when(itineraryService.insertItineraries(anyLong(), anyList()))
                 .thenReturn(List.of(mockResponse2));
 
-        itineraryRequestList.add(itineraryRequest);
+        itineraryRequestList.add(mockItineraryRequest.create());
 
 
         this.mockMvc.perform(post("/itinerary/{id}", 1)
@@ -247,7 +133,7 @@ public class ItineraryControllerTest {
     @Test
     void bringAllItineraryTest() throws Exception {
 
-        ItineraryResponse mockResponse = createMockItineraryResponse();
+        ItineraryResponse mockResponse = mockItineraryResponse.create();
         List<ItineraryResponse> mockList = new ArrayList<>();
         mockList.add(mockResponse);
 
@@ -287,7 +173,7 @@ public class ItineraryControllerTest {
     @Test
     void bringOneItineraryTest() throws Exception {
 
-        ItineraryResponse mockResponse = createMockItineraryResponse();
+        ItineraryResponse mockResponse = mockItineraryResponse.create();
 
         Mockito.when(itineraryService.selectItinerary(anyLong())).thenReturn(mockResponse);
 
@@ -323,11 +209,11 @@ public class ItineraryControllerTest {
     @Test
     void editItineraryTest() throws Exception {
         Mockito.when(itineraryService.updateItinerary(anyLong(), any(ItineraryRequest.class)))
-                .thenReturn(createMockItineraryResponse());
+                .thenReturn(mockItineraryResponse.create());
 
         this.mockMvc.perform(patch("/itinerary/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(itineraryRequest)))
+                        .content(objectMapper.writeValueAsString(mockItineraryRequest.create())))
                 .andExpect(status().isOk())
                 .andDo(document("patch-itinerary-id",
                         requestFields(
