@@ -22,6 +22,9 @@ public class Activity {
     @Comment("도착지")
     private String arrivalPlace;
 
+    @Comment("도착지 주소")
+    private String arrivalAddress;
+
     @Comment("설명")
     private String description;
 
@@ -33,11 +36,16 @@ public class Activity {
     private TimeSchedule activityTimeSchedule;
 
     @Builder
-    private Activity(TransportEnum transportEnum, String departurePlace, String arrivalPlace, String description, TimeSchedule activityTimeSchedule) {
+    private Activity(TransportEnum transportEnum, String departurePlace, String arrivalPlace, String description, TimeSchedule activityTimeSchedule, String arrivalAddress) {
         this.transportEnum = transportEnum;
         this.departurePlace = departurePlace;
         this.arrivalPlace = arrivalPlace;
         this.description = description;
         this.activityTimeSchedule = activityTimeSchedule;
+        this.arrivalAddress = arrivalAddress;
+    }
+
+    public void setArrivalAddress(String arrivalAddress) {
+        this.arrivalAddress = arrivalAddress;
     }
 }

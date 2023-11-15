@@ -16,8 +16,7 @@ public class GoogleMapUtils {
     private static Dotenv dotenv = Dotenv.load();
     private static final String API_KEY = dotenv.get("GOOGLE_MAP_API_KEY");
 
-
-    public static Place searchPlaces(String keyword) {
+    public static String getAddress(String keyword) {
         if (API_KEY.isBlank()) {
             throw new IllegalStateException("API키가 문제임");
         }
@@ -27,14 +26,15 @@ public class GoogleMapUtils {
             ResponseEntity<PlacesTextSearchResponse> responseEntity = restTemplate.exchange(
                     url,
                     HttpMethod.GET,
-                    null,  // 헤더 없음
+                    null,
                     PlacesTextSearchResponse.class
             );
             PlacesTextSearchResponse response = responseEntity.getBody();
             if (response != null && response.getStatus().equals(PlacesSearchStatus.OK)) {
                 List<Place> places = response.getResults();
                 if (!places.isEmpty()) {
-                    return places.get(0);
+                    Place place = places.get(0);
+                    return place.getFormattedAddress(); // 주소만 출력
                 } else {
                     throw new IllegalStateException("검색 결과가 없습니다.");
                 }
@@ -46,3 +46,4 @@ public class GoogleMapUtils {
         }
     }
 }
+
