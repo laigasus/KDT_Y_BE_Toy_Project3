@@ -87,6 +87,7 @@ public class TripCommentServiceImpl implements TripCommentService {
         }
     }
 
+    @Transactional
     @Override
     public boolean deleteTripComment(
             long tripId,
@@ -94,7 +95,19 @@ public class TripCommentServiceImpl implements TripCommentService {
             PrincipalDetails principalDetails
     ) {
         CheckUserLogined.checkUserLogined(principalDetails);
-        tripCommentRepository.deleteById(commentId);
-        return true;
+
+        Optional<TripComment> tripCommentOptional = tripCommentRepository.findById(commentId);
+        if (tripCommentOptional.isPresent()) {
+            TripComment tripComment = tripCommentOptional.get();
+
+            if (!Objects.equals(principalDetails.getUser().getUserId(), tripComment.getUser().getUserId())) {
+                throw new InvalidAccessToUpdateTripComment();
+            }
+
+            tripCommentRepository.deleteById(commentId);
+            return true;
+        } else {
+            throw new InvalidTripCommentIdException();
+        }
     }
 }
