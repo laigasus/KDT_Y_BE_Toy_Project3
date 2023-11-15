@@ -2,14 +2,16 @@ package com.example.kdt_y_be_toy_project2.global.jwt;
 
 import com.example.kdt_y_be_toy_project2.domain.user.dto.LoginRequest;
 import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
+import com.example.kdt_y_be_toy_project2.domain.user.repository.UserRepository;
 import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * JWT를 이용한 로그인 인증
@@ -28,13 +31,21 @@ import java.util.List;
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final JwtProvider jwtProvider;
+    UserRepository userRepository;
+
+    CustomAuthenticationFailureHandler authenticationFailureHandler;
 
     public JwtAuthenticationFilter(
             AuthenticationManager authenticationManager,
-            JwtProvider jwtProvider
+            JwtProvider jwtProvider,
+            UserRepository userRepository,
+            CustomAuthenticationFailureHandler authenticationFailureHandler
     ) {
+        this.authenticationFailureHandler = authenticationFailureHandler;
+        setAuthenticationFailureHandler(authenticationFailureHandler);
         super.setAuthenticationManager(authenticationManager);
         this.jwtProvider = jwtProvider;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -50,6 +61,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             ObjectMapper objectMapper = new ObjectMapper();
             LoginRequest loginRequest = objectMapper.readValue(request.getInputStream(), LoginRequest.class);
 
+            Optional<User> user = userRepository.findByEmail(loginRequest.email());
+
+            if (user.isEmpty()) {
+                throw new BadCredentialsException("이메일 또는 비밀번호가 잘못되었습니다.");
+            }
+
             // 로그인할 때 입력한 email과 password를 가지고 authenticationToken를 생성
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     loginRequest.email(),
@@ -60,6 +77,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             return this.getAuthenticationManager().authenticate(authenticationToken);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } catch (AuthenticationException e){
+            try {
+                //로그인시 발생한 에러를 unsuccessfulAuthentication에서 처리
+                unsuccessfulAuthentication(request, response, e);
+            } catch (IOException | ServletException ex) {
+                throw new RuntimeException(ex);
+            }
+            return null;
         }
     }
 
@@ -89,10 +114,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletRequest request,
             HttpServletResponse response,
             AuthenticationException failed
-    ) throws IOException {
-        response.sendError(
-                HttpStatus.BAD_REQUEST.value(),
-                "JwtAuthenticationFilter에서 인증 실패"
-        );
+    ) throws IOException, ServletException {
+        //super.unsuccessfulAuthentication(request, response, failed);
+        authenticationFailureHandler.onAuthenticationFailure(request, response, failed);
     }
 }

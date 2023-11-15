@@ -16,7 +16,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-
 /**
  * Security 설정 Config
  */
@@ -61,12 +60,13 @@ public class SpringSecurityConfig {
                         .anyRequest().authenticated()
         );
 
-        http.exceptionHandling(exceptionHandling -> exceptionHandling
-                .authenticationEntryPoint((request, response, authException) ->
-                        CustomResponseUtil.fail(response, "로그인을 진행해 주세요", HttpStatus.UNAUTHORIZED))
-                .accessDeniedHandler((request, response, accessDeniedException) ->
-                        CustomResponseUtil.fail(response, "접근 권한이 없습니다", HttpStatus.FORBIDDEN))
-        );
+        http.exceptionHandling(exceptionHandling -> {
+            exceptionHandling.authenticationEntryPoint((request, response, authException) ->
+                    CustomResponseUtil.fail(response, "로그인을 진행해 주세요", HttpStatus.UNAUTHORIZED));
+
+            exceptionHandling.accessDeniedHandler((request, response, accessDeniedException) ->
+                    CustomResponseUtil.fail(response, "접근 권한이 없습니다", HttpStatus.FORBIDDEN));
+        });
 
         // logout
         // http.logout(logout -> logout.deleteCookies(JwtProperties.COOKIE_NAME));

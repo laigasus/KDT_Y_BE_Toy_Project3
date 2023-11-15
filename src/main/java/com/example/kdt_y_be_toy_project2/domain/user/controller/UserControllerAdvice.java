@@ -22,5 +22,4 @@ public class UserControllerAdvice {
                 LocalDateTime.now());
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
-
 }
