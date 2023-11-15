@@ -4,6 +4,7 @@ import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
 import com.example.kdt_y_be_toy_project2.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
@@ -47,4 +48,9 @@ public class UserLike extends BaseTimeEntity {
         trip.getUserLikes().add(this);
     }
 
+    @Builder
+    private UserLike(Trip trip, User user) {
+        this.trip = trip;
+        this.user = user;
+    }
 }
