@@ -1,5 +1,6 @@
 package com.example.kdt_y_be_toy_project2.domain.trip.controller;
 
+import com.example.kdt_y_be_toy_project2.domain.trip.dto.TripKeyWord;
 import com.example.kdt_y_be_toy_project2.domain.trip.dto.TripRequest;
 import com.example.kdt_y_be_toy_project2.domain.trip.dto.TripResponse;
 import com.example.kdt_y_be_toy_project2.domain.trip.service.TripService;
@@ -77,5 +78,15 @@ public class TripController {
     public ResponseEntity<?> editTrip(@PathVariable long id,
                                       @RequestBody @Valid TripRequest tripRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(tripService.updateTrip(id, tripRequest));
+    }
+
+    @GetMapping("/get")
+    @Operation(summary = "검색어에 맞는 여행 정보 조회")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "여행 조회 성공", content = @Content(schema = @Schema(implementation = TripResponse.TripByKeyWord.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근", content = @Content(schema = @Schema(implementation = ErrorMessage.class)))
+    })
+    public ResponseEntity<?> bringTripById(@RequestParam("keyWord") @Valid String keyWord) {
+        return ResponseEntity.status(HttpStatus.OK).body(tripService.selectTrips(keyWord));
     }
 }
