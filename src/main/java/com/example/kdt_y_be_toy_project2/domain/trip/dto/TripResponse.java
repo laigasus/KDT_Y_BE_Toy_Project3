@@ -78,4 +78,22 @@ public class TripResponse {
             return itineraries.stream().map(ItineraryResponse::fromEntity).toList();
         }
     }
+
+    public record TripByKeyWord(
+            @Positive
+            @Schema(example = "4")
+            Long tripId,
+            @NotNull
+            @Schema(example = "강원도 여행")
+            String tripName,
+            @NotNull String updatedAt) {
+
+        public static TripByKeyWord fromEntity(Trip trip) {
+            return new TripByKeyWord(
+                    trip.getTripId(),
+                    trip.getTripName(),
+                    TimeUtils.formatDateTime(trip.getUpdatedAt())
+            );
+        }
+    }
 }
