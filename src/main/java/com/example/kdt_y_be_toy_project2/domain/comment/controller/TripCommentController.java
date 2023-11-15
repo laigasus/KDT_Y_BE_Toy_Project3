@@ -56,6 +56,6 @@ public class TripCommentController {
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
         tripCommentService.deleteTripComment(tripId, commentId, principalDetails);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().body(commentId+"번 댓글 삭제 성공");
     }
 }
