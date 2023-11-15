@@ -1,0 +1,2 @@
+### KeyWord로 여행 검색
+GET http://localhost:8080/trip/get?keyWord=
