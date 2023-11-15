@@ -4,6 +4,8 @@ import com.example.kdt_y_be_toy_project2.global.util.api.dto.Place;
 import com.example.kdt_y_be_toy_project2.global.util.api.dto.PlacesSearchStatus;
 import com.example.kdt_y_be_toy_project2.global.util.api.dto.PlacesTextSearchResponse;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -22,8 +24,13 @@ public class GoogleMapUtils {
         String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" +
                 keyword + "&key=" + API_KEY;
         try {
-            PlacesTextSearchResponse response = restTemplate.getForObject(url, PlacesTextSearchResponse.class);
-
+            ResponseEntity<PlacesTextSearchResponse> responseEntity = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    null,  // 헤더 없음
+                    PlacesTextSearchResponse.class
+            );
+            PlacesTextSearchResponse response = responseEntity.getBody();
             if (response != null && response.getStatus().equals(PlacesSearchStatus.OK)) {
                 List<Place> places = response.getResults();
                 if (!places.isEmpty()) {
