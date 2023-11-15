@@ -2,14 +2,12 @@ package com.example.kdt_y_be_toy_project2.domain.itinerary.service;
 
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryRequest;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryResponse;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Activity;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.error.ItineraryNotLoadedException;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.repository.ItineraryRepository;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.error.TripNotLoadedException;
 import com.example.kdt_y_be_toy_project2.domain.trip.repository.TripRepository;
-import com.example.kdt_y_be_toy_project2.global.util.api.service.GoogleMapUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,21 +30,7 @@ public class ItineraryService {
                 .orElseThrow(TripNotLoadedException::new);
 
         List<Itinerary> itineraries = itineraryRequestList.stream()
-                .map(itineraryRequest -> {
-                    Itinerary itinerary = itineraryRequest.toEntity();
-
-                    // ArrivalPlace에 대한 주소 정보 추가
-                    for (Activity activity : itinerary.getActivity()) {
-                        String arrivalPlace = activity.getArrivalPlace();
-                        String arrivalAddress = GoogleMapUtils.getAddress(arrivalPlace);
-
-                        // Setter 메서드를 통해 ArrivalAddress 설정
-                        activity.setArrivalAddress(arrivalAddress);
-                    }
-
-                    itinerary.setTrip(trip);
-                    return itinerary;
-                })
+                .map(ItineraryRequest::toEntity)
                 .peek(itinerary -> itinerary.setTrip(trip))
                 .toList();
 
