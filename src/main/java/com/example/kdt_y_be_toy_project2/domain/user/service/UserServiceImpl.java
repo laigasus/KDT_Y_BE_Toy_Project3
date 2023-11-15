@@ -2,6 +2,7 @@ package com.example.kdt_y_be_toy_project2.domain.user.service;
 
 import com.example.kdt_y_be_toy_project2.domain.user.dto.CreateUserRequest;
 import com.example.kdt_y_be_toy_project2.domain.user.dto.CreateUserResponse;
+import com.example.kdt_y_be_toy_project2.domain.user.error.EmailDuplicateError;
 import com.example.kdt_y_be_toy_project2.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public CreateUserResponse signup(CreateUserRequest createUserRequest) {
+
+        if(userRepository.findByEmail(createUserRequest.email()).isPresent()){
+            throw new EmailDuplicateError();
+        }
 
         return CreateUserResponse.fromEntity(
                 userRepository.save(createUserRequest.toEntity()));
