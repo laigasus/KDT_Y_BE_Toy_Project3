@@ -130,7 +130,7 @@ public class TripControllerTest {
                         1L, // tripId
                         List.of(new AccommodationDTO("string", TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)), TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)))), // accommodation
                         List.of(new ResidenceDTO("string", TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)), TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)))), // residence
-                        List.of(new ActivityDTO("버스", "string", "string", "string", TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)), TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)))), // activity
+                        List.of(new ActivityDTO("버스", "string", "string", "string", TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)), TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)), "집")), // activity
                         new TimeScheduleDTO(LocalDateTime.of(2023, 10, 27, 0, 0), LocalDateTime.of(2023, 10, 27, 23, 59), true), // timeSchedule
                         TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 17, 40)), // createdAt
                         TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 20, 47)) // updatedAt
