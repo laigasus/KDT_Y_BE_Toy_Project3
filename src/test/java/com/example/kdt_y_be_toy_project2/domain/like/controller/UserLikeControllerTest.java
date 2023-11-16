@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @ExtendWith(RestDocumentationExtension.class)
-public class UserLikeControllerTest {
+class UserLikeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -69,7 +69,7 @@ public class UserLikeControllerTest {
 
 
     @Test
-    public void addUserLikeTest() throws Exception {
+    void addUserLikeTest() throws Exception {
         UserLikeAddTripRequest request = new UserLikeAddTripRequest(1L); // 여행 ID를 예시로 1로 설정
         UserLikeAddTripResponse response = new UserLikeAddTripResponse(1L, 1L, "좋아요 요청 성공");
 
@@ -93,7 +93,7 @@ public class UserLikeControllerTest {
 
 
     @Test
-    public void getUserLikeTest() throws Exception {
+    void getUserLikeTest() throws Exception {
         // 사용자가 좋아하는 여행 목록의 응답 예시
         List<UserLikeGetTripsResponse> mockResponse = List.of(
                 new UserLikeGetTripsResponse(1L, "부산 여행", "2023-11-15")
@@ -113,7 +113,7 @@ public class UserLikeControllerTest {
     }
 
     @Test
-    public void removeUserLikeTest() throws Exception {
+    void removeUserLikeTest() throws Exception {
         UserLikeRemoveTripRequest request = new UserLikeRemoveTripRequest(1L); // 예시 여행 ID
         DeleteUserLikeResponse response = new DeleteUserLikeResponse("좋아요 삭제 성공");
 

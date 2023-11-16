@@ -43,7 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureRestDocs
 @WithUserDetails(value = "liyusang1@naver.com")
 @ExtendWith(RestDocumentationExtension.class)
-public class UserControllerTest extends DummyObjectForController {
+class UserControllerTest extends DummyObjectForController {
 
     @Autowired
     private MockMvc mockMvc;
@@ -72,7 +72,7 @@ public class UserControllerTest extends DummyObjectForController {
 
 
     @Test
-    public void signUpTest() throws Exception {
+    void signUpTest() throws Exception {
         CreateUserRequest request = new CreateUserRequest("liyusang1@naver.com", "liyusang1", "123456");
         CreateUserResponse response = new CreateUserResponse("liyusang1@naver.com", "liyusang1");
 
@@ -96,15 +96,13 @@ public class UserControllerTest extends DummyObjectForController {
     }
 
     @Test
-    public void testUserTest() throws Exception {
-        // User 객체 생성
+    void testUserTest() throws Exception {
         User testUser = User.builder()
                 .email("liyusang1@naver.com")
                 .username("liyusang1")
                 .password("123456")
                 .build();
 
-        // 테스트를 위한 JSON 형태의 응답 생성
         CreateUserResponse expectedResponse = new CreateUserResponse(testUser.getEmail(), testUser.getUsername());
         String expectedJsonResponse = objectMapper.writeValueAsString(expectedResponse);
 

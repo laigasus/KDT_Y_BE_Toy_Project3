@@ -3,12 +3,10 @@ package com.example.kdt_y_be_toy_project2.domain.like.controller;
 import com.example.kdt_y_be_toy_project2.domain.like.dto.UserLikeAddTripRequest;
 import com.example.kdt_y_be_toy_project2.domain.like.dto.UserLikeRemoveTripRequest;
 import com.example.kdt_y_be_toy_project2.domain.like.service.UserLikeService;
-import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
 import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 

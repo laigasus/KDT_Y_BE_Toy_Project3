@@ -31,7 +31,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 
 
-public class TripServiceTest extends DummyObjectForService {
+class TripServiceTest extends DummyObjectForService {
 
     @InjectMocks
     private TripService tripService;

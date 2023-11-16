@@ -1,4 +1,5 @@
 package com.example.kdt_y_be_toy_project2.domain.comment.error;
+
 import com.example.kdt_y_be_toy_project2.global.exception.GlobalException;
 
 public class InvalidTripException extends GlobalException {

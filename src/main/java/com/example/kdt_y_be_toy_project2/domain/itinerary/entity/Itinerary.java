@@ -65,7 +65,6 @@ public class Itinerary extends BaseTimeEntity {
         trip.getItineraries().add(this);
     }
 
-    // 여정 정보 수정
     public void modifyInfo(ItineraryRequest itineraryRequest) {
         this.residence = itineraryRequest.residence();
         this.accommodation = itineraryRequest.accommodation();

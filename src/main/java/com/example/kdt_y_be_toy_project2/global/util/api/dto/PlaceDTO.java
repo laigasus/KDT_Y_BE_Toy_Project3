@@ -5,14 +5,12 @@ import lombok.Setter;
 @Setter
 public class PlaceDTO {
     private String formattedAddress;
-    //private String internationalPhoneNumber;
     private String name;
 
 
     public static PlaceDTO fromPlace(Place place) {
         PlaceDTO placeDTO = new PlaceDTO();
         placeDTO.setFormattedAddress(place.getFormattedAddress());
-       // placeDTO.setInternationalPhoneNumber(place.getInternational_phone_number());
         placeDTO.setName(place.getName());
 
 

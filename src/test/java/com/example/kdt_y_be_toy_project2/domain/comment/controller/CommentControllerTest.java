@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @ExtendWith(RestDocumentationExtension.class)
-public class CommentControllerTest {
+class CommentControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -67,7 +67,7 @@ public class CommentControllerTest {
 
 
     @Test
-    public void bringCommentsTest() throws Exception {
+    void bringCommentsTest() throws Exception {
 
         List<TripCommentGetResponse> mockResponse = List.of(
                 new TripCommentGetResponse(1L, 1L, "부산 여행 일정 수정", "liyusang1@naver.com", "liyusang1", "즐거운여행입니다. 여행테스트", "2023년 11월 15일 00시 06분")
@@ -95,7 +95,7 @@ public class CommentControllerTest {
 
 
     @Test
-    public void addCommentTest() throws Exception {
+    void addCommentTest() throws Exception {
 
         TripCommentAddRequest request = new TripCommentAddRequest("즐거운여행입니다. 여행테스트");
 
@@ -130,7 +130,7 @@ public class CommentControllerTest {
 
 
     @Test
-    public void editCommentTest() throws Exception {
+    void editCommentTest() throws Exception {
         long tripId = 1L;
         long commentId = 1L;
         TripCommentUpdateRequest updateRequest = new TripCommentUpdateRequest("수정된 코멘트 내용");
@@ -169,7 +169,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    public void deleteCommentTest() throws Exception {
+    void deleteCommentTest() throws Exception {
         long tripId = 1L;
         long commentId = 1L;
 

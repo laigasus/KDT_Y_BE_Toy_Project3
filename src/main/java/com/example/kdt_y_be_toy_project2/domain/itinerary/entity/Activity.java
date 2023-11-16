@@ -29,10 +29,8 @@ public class Activity {
     private String description;
 
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "startTime", column = @Column(name = "activity_start")),
-            @AttributeOverride(name = "endTime", column = @Column(name = "activity_end"))
-    })
+    @AttributeOverride(name = "startTime", column = @Column(name = "activity_start"))
+    @AttributeOverride(name = "endTime", column = @Column(name = "activity_end"))
     private TimeSchedule activityTimeSchedule;
 
     @Builder

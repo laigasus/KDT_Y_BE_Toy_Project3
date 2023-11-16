@@ -4,20 +4,22 @@ import com.example.kdt_y_be_toy_project2.global.util.api.dto.Place;
 import com.example.kdt_y_be_toy_project2.global.util.api.dto.PlacesSearchStatus;
 import com.example.kdt_y_be_toy_project2.global.util.api.dto.PlacesTextSearchResponse;
 import io.github.cdimascio.dotenv.Dotenv;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+@NoArgsConstructor(access = lombok.AccessLevel.PRIVATE)
 public class GoogleMapUtils {
 
     private static final RestTemplate restTemplate = new RestTemplate();
-    private static Dotenv dotenv = Dotenv.load();
+    private static final Dotenv dotenv = Dotenv.load();
     private static final String API_KEY = dotenv.get("GOOGLE_MAP_API_KEY");
 
     public static String getAddress(String keyword) {
-        if (API_KEY.isBlank()) {
+        if (API_KEY != null && API_KEY.isBlank()) {
             throw new IllegalStateException("API키가 문제임");
         }
         String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" +
@@ -34,7 +36,7 @@ public class GoogleMapUtils {
                 List<Place> places = response.getResults();
                 if (!places.isEmpty()) {
                     Place place = places.get(0);
-                    return place.getFormattedAddress(); // 주소만 출력
+                    return place.getFormattedAddress();
                 } else {
                     throw new IllegalStateException("검색 결과가 없습니다.");
                 }

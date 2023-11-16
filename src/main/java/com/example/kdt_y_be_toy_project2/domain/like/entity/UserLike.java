@@ -28,7 +28,6 @@ public class UserLike extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // 좋아요 클릭
     public static UserLike like(User user, Trip trip) {
         UserLike userLike = new UserLike();
         userLike.setTripAndUser(trip, user);
@@ -36,7 +35,6 @@ public class UserLike extends BaseTimeEntity {
         return userLike;
     }
 
-    // Trip과 User에 해당하는 UserLike 연관관계 삭제
     public void delete() {
         this.trip.getUserLikes().remove(this);
     }

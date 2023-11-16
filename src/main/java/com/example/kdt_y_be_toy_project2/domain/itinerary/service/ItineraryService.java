@@ -23,7 +23,6 @@ public class ItineraryService {
     private final ItineraryRepository itineraryRepository;
     private final TripRepository tripRepository;
 
-    // 여정 다건 등록
     @Transactional
     public List<ItineraryResponse> insertItineraries(Long tripId, List<ItineraryRequest> itineraryRequestList) {
         Trip trip = tripRepository.findById(tripId)
@@ -38,24 +37,21 @@ public class ItineraryService {
 
         return itineraries.stream()
                 .map(ItineraryResponse::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    // TripId로 여정 다건 조회
     public List<ItineraryResponse> selectItineraries(Long tripId) {
         return itineraryRepository.findByTripTripId(tripId).stream()
                 .map(ItineraryResponse::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 
-    // TripId로 여정 단건 조회
     public ItineraryResponse selectItinerary(Long itineraryId) {
         return itineraryRepository.findById(itineraryId)
                 .map(ItineraryResponse::fromEntity)
                 .orElseThrow(ItineraryNotLoadedException::new);
     }
 
-    // 여정 수정
     @Transactional
     public ItineraryResponse updateItinerary(long id, ItineraryRequest itineraryRequest) {
         itineraryRequest.toEntity();

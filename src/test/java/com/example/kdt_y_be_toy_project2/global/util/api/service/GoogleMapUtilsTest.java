@@ -12,7 +12,7 @@ class GoogleMapUtilsTest {
 
     @DisplayName("Google API 테스트")
     @Test
-    public void testSearchPlaces() {
+    void testSearchPlaces() {
         String keyword = "역곡 장군집";
 
         String place = GoogleMapUtils.getAddress(keyword);

@@ -16,9 +16,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-/**
- * Security 설정 Config
- */
 @Configuration
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
@@ -28,17 +25,11 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws Exception {
-        //MvcRequestMatcher.Builder mvcMatcherBuilder = new MvcRequestMatcher.Builder(introspector);
 
-        // basic authentication
-        http.httpBasic(AbstractHttpConfigurer::disable); // basic authentication filter 비활성화
-        // csrf
+        http.httpBasic(AbstractHttpConfigurer::disable);
         http.csrf(AbstractHttpConfigurer::disable);
-        // remember-me
         http.rememberMe(AbstractHttpConfigurer::disable);
-        // stateless
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        // jwt filter
         http.addFilterBefore(
                 jwtAuthenticationFilter,
                 UsernamePasswordAuthenticationFilter.class
@@ -48,10 +39,6 @@ public class SpringSecurityConfig {
         );
 
         http.authorizeHttpRequests(authz -> authz
-/*                .requestMatchers(mvcMatcherBuilder.pattern("mvc용 아무 주소")).authenticated()
-                .requestMatchers(new AntPathRequestMatcher("ant matcher용 아무 주소")).authenticated()
-                .requestMatchers(new AntPathRequestMatcher("role 은 이렇게")).hasRole("ADMIN")
-                .requestMatchers(new AntPathRequestMatcher("role 은 이렇게", HttpMethod.POST.name())).hasRole("ADMIN")*/
                         .requestMatchers(new AntPathRequestMatcher("/trip/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/itinerary/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/user/signup")).permitAll()
@@ -68,9 +55,6 @@ public class SpringSecurityConfig {
             exceptionHandling.accessDeniedHandler((request, response, accessDeniedException) ->
                     CustomResponseUtil.fail(response, "접근 권한이 없습니다", HttpStatus.FORBIDDEN));
         });
-
-        // logout
-        // http.logout(logout -> logout.deleteCookies(JwtProperties.COOKIE_NAME));
 
         return http.build();
     }

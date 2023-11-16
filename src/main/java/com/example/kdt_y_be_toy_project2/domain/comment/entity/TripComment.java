@@ -42,7 +42,7 @@ public class TripComment extends BaseTimeEntity {
         this.user = user;
     }
 
-    public void editTripComment(TripCommentUpdateRequest tripCommentUpdateRequest){
-        this.tripComment=tripCommentUpdateRequest.tripComment();
+    public void editTripComment(TripCommentUpdateRequest tripCommentUpdateRequest) {
+        this.tripComment = tripCommentUpdateRequest.tripComment();
     }
 }

@@ -4,7 +4,7 @@ import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-public record CreateUserRequest (
+public record CreateUserRequest(
         @NotNull
         String email,
 
@@ -13,10 +13,10 @@ public record CreateUserRequest (
 
         @NotNull
         String password
-){
+) {
     static BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public User toEntity(){
+    public User toEntity() {
         return User.builder()
                 .email(email)
                 .username(username)

@@ -6,7 +6,6 @@ import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ResidenceDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.global.dto.TimeScheduleDTO;
 import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,20 +15,12 @@ import java.util.Optional;
 
 public record ItineraryResponse(
         @Min(1L)
-        @Schema(example = "7")
         Long id,
-
         @NotNull
-        @Schema(example = "옥크나이트와 떠나는 코딩숙박")
         String itineraryName,
-
-        @Schema(hidden = true)
         Long tripId,
-
         List<AccommodationDTO> accommodation,
-
         List<ResidenceDTO> residence,
-
         List<ActivityDTO> activity,
         @NotNull TimeScheduleDTO timeSchedule,
         @NotNull String createdAt,

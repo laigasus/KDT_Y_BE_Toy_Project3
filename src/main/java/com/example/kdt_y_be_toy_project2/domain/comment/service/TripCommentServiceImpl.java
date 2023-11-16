@@ -10,7 +10,6 @@ import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.domain.trip.repository.TripRepository;
 import com.example.kdt_y_be_toy_project2.domain.user.repository.UserRepository;
 import com.example.kdt_y_be_toy_project2.global.config.CheckUserLogined;
-import com.example.kdt_y_be_toy_project2.global.exception.InvalidPrincipalDetailsException;
 import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,7 @@ public class TripCommentServiceImpl implements TripCommentService {
             PrincipalDetails principalDetails
     ) {
         CheckUserLogined.checkUserLogined(principalDetails);
-        long userId=principalDetails.getUser().getUserId();
+        long userId = principalDetails.getUser().getUserId();
 
         Optional<Trip> tripOptional = tripRepository.findById(tripId);
         if (tripOptional.isPresent()) {

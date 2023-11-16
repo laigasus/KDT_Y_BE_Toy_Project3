@@ -5,10 +5,9 @@ import lombok.Getter;
 
 @Getter
 public class Place {
-        @JsonProperty("formatted_address")
-        String formattedAddress;
-        //String international_phone_number;
-        String name;
+    @JsonProperty("formatted_address")
+    String formattedAddress;
+    String name;
 
 }
 

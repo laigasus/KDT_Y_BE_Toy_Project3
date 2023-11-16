@@ -9,8 +9,8 @@ public record LoginResponse(
         @NotNull
         String name
 
-){
-    public static LoginResponse fromEntity(User user){
+) {
+    public static LoginResponse fromEntity(User user) {
         return new LoginResponse(
                 user.getEmail(),
                 user.getUsername()

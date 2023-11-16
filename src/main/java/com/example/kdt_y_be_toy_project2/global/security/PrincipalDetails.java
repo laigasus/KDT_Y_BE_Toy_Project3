@@ -8,24 +8,22 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class PrincipalDetails implements UserDetails {
-    private  User user;
-    private  String username;
-    private  String password;
+    private User user;
+    private String username;
+    private String password;
 
-    public PrincipalDetails(User user){
-        this.user=user;
+    public PrincipalDetails(User user) {
+        this.user = user;
     }
 
-    public User getUser(){
+    public User getUser() {
         return user;
     }
 

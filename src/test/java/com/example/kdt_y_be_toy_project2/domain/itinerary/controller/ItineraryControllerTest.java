@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-public class ItineraryControllerTest extends DummyObjectForController {
+class ItineraryControllerTest extends DummyObjectForController {
 
     @MockBean
     ItineraryService itineraryService;

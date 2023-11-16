@@ -1,9 +1,7 @@
 package com.example.kdt_y_be_toy_project2.global.jwt;
 
 import com.example.kdt_y_be_toy_project2.global.exception.AuthenticationErrorMessage;
-import com.example.kdt_y_be_toy_project2.global.exception.ErrorMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -27,7 +25,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
             HttpServletRequest request,
             HttpServletResponse response,
             AuthenticationException exception
-    ) throws IOException, ServletException {
+    ) throws IOException {
 
         logger.error("Authentication failed", exception);
         try {
@@ -46,13 +44,11 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
             ObjectMapper objectMapper = new ObjectMapper();
             String jsonErrorMessage = objectMapper.writeValueAsString(authenticationErrorMessage);
 
-            // UTF-8 설정
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json");
             response.getWriter().write(jsonErrorMessage);
 
         } catch (Exception e) {
-            // 예외가 발생하면 로깅하고 적절한 응답을 설정
             logger.error("Error handling authentication failure", e);
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.getWriter().write("Authentication failed: " + e.getMessage());

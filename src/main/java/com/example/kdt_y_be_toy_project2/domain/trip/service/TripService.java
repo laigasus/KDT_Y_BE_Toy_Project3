@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -70,6 +69,6 @@ public class TripService {
 
         return trips.stream()
                 .map(TripResponse.TripByKeyWord::fromEntity)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

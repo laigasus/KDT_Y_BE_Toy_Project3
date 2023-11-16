@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @ExtendWith(RestDocumentationExtension.class)
-public class TripControllerTest extends DummyObjectForController {
+class TripControllerTest extends DummyObjectForController {
 
     @Autowired
     private MockMvc mockMvc;
@@ -73,7 +73,7 @@ public class TripControllerTest extends DummyObjectForController {
 
 
     @Test
-    public void addTripTest() throws Exception {
+    void addTripTest() throws Exception {
         TripRequest sampleTripRequest = dummyTripRequest();
         String tripRequestJson = objectMapper.writeValueAsString(sampleTripRequest);
 
@@ -113,7 +113,7 @@ public class TripControllerTest extends DummyObjectForController {
 
 
     @Test
-    public void bringAllTripsTest() throws Exception {
+    void bringAllTripsTest() throws Exception {
         List<TripResponse.AllTrips> mockResponse = List.of(
                 new TripResponse.AllTrips(dummyTripResponseTripInfo(), List.of("일정1", "일정2"))
         );
@@ -138,7 +138,7 @@ public class TripControllerTest extends DummyObjectForController {
     }
 
     @Test
-    public void bringTripByIdTest() throws Exception {
+    void bringTripByIdTest() throws Exception {
         TripResponse.TripById mockResponse = dummyTripResponseTripById();
 
         Mockito.when(tripService.selectTrip(1L)).thenReturn(mockResponse);
@@ -168,7 +168,7 @@ public class TripControllerTest extends DummyObjectForController {
 
 
     @Test
-    public void editTripTest() throws Exception {
+    void editTripTest() throws Exception {
 
 
         // 요청 데이터 준비

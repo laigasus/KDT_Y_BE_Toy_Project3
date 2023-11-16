@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private static final String EMAIL_PATTERN =
@@ -23,12 +23,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public CreateUserResponse signup(CreateUserRequest createUserRequest) {
 
-        //이메일 유효성 검사
         if (!isValidEmail(createUserRequest.email())) {
             throw new InvalidEmailException();
         }
 
-        if(userRepository.findByEmail(createUserRequest.email()).isPresent()){
+        if (userRepository.findByEmail(createUserRequest.email()).isPresent()) {
             throw new EmailDuplicateError();
         }
 

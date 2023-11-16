@@ -41,13 +41,11 @@ public class UserLikeServiceImpl implements UserLikeService {
         Optional<Trip> tripOptional = tripRepository.findById(tripId);
         CheckUserLogined.checkUserLogined(principalDetails);
 
-        //여행을 가져오지 못하는경우
         if (tripOptional.isEmpty()) {
             throw new TripNotLoadedException();
         }
         UserLike like = UserLike.like(principalDetails.getUser(), tripOptional.get());
 
-        //이미 좋아요 눌렀으면 좋아요 테이블에 또 생성하면 안 됨 -> 좋아요 가져올때 중복적으로 가죠옴
         Optional<UserLike> userLikeOptional = userLikeRepository.findByUserAndTripTripId(principalDetails.getUser(), tripId);
         if (userLikeOptional.isPresent()) {
             return new UserLikeAddTripResponse(

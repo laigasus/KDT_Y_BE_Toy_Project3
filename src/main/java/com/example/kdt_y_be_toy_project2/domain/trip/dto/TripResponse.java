@@ -6,7 +6,6 @@ import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
 import com.example.kdt_y_be_toy_project2.global.dto.TimeScheduleDTO;
 import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
@@ -18,10 +17,8 @@ public class TripResponse {
 
     public record TripInfo(
             @Positive
-            @Schema(example = "4")
             Long tripId,
             @NotNull
-            @Schema(example = "강원도 여행")
             String tripName,
             @NotNull
             TimeScheduleDTO timeSchedule,
@@ -90,10 +87,8 @@ public class TripResponse {
 
     public record TripByKeyWord(
             @Positive
-            @Schema(example = "4")
             Long tripId,
             @NotNull
-            @Schema(example = "강원도 여행")
             String tripName,
             @NotNull String updatedAt,
             @NotNull Integer likes) {

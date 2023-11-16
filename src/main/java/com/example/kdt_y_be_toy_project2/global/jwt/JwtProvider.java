@@ -18,56 +18,40 @@ import java.util.concurrent.TimeUnit;
 public class JwtProvider {
     private final RedisTemplate<String, String> redisTemplate;
 
-    /**
-     * 토큰에서 username 찾기
-     *
-     * @param token 토큰
-     * @return username
-     */
-    public  String getEmail(String token) {
-        // jwtToken에서 email을 찾습니다.
+    public String getEmail(String token) {
         return Jwts.parserBuilder()
                 .setSigningKeyResolver(SigningKeyResolver.instance)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .getSubject(); // username
+                .getSubject();
     }
 
-    /**
-     * user로 토큰 생성
-     * HEADER : alg, kid
-     * PAYLOAD : sub, iat, exp
-     * SIGNATURE : JwtKey.getRandomKey로 구한 Secret Key로 HS512 해시
-     *
-     * @param user 유저
-     * @return jwt token
-     */
-    public  String createToken(User user) {
-        Claims claims = Jwts.claims().setSubject(user.getEmail()); // subject
-        Date now = new Date(); // 현재 시간
+    public String createToken(User user) {
+        Claims claims = Jwts.claims().setSubject(user.getEmail());
+        Date now = new Date();
         Pair<String, Key> key = JwtKey.getRandomKey();
-        // JWT Token 생성
+
         return Jwts.builder()
-                .setClaims(claims) // 정보 저장
-                .setIssuedAt(now) // 토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + JwtProperties.ACCESS_TOKEN_EXPIRATION_TIME)) // 토큰 만료 시간 설정
-                .setHeaderParam(JwsHeader.KEY_ID, key.getFirst()) // kid
-                .signWith(key.getSecond()) // signature
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + JwtProperties.ACCESS_TOKEN_EXPIRATION_TIME))
+                .setHeaderParam(JwsHeader.KEY_ID, key.getFirst())
+                .signWith(key.getSecond())
                 .compact();
     }
 
-    public  String createRefreshToken(String email) {
-        Claims claims = Jwts.claims().setSubject(email); // subject
-        Date now = new Date(); // 현재 시간
+    public String createRefreshToken(String email) {
+        Claims claims = Jwts.claims().setSubject(email);
+        Date now = new Date();
         Pair<String, Key> key = JwtKey.getRandomKey();
-        // JWT Token 생성
+
         String refreshToken = Jwts.builder()
-                .setClaims(claims) // 정보 저장
-                .setIssuedAt(now) // 토큰 발행 시간 정보
-                .setExpiration(new Date(now.getTime() + JwtProperties.REFRESH_TOKEN_EXPIRATION_TIME)) // 토큰 만료 시간 설정
-                .setHeaderParam(JwsHeader.KEY_ID, key.getFirst()) // kid
-                .signWith(key.getSecond()) // signature
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + JwtProperties.REFRESH_TOKEN_EXPIRATION_TIME))
+                .setHeaderParam(JwsHeader.KEY_ID, key.getFirst())
+                .signWith(key.getSecond())
                 .compact();
 
         redisTemplate.opsForValue().set(

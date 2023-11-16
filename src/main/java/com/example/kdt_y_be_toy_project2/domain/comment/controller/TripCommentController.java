@@ -27,11 +27,11 @@ public class TripCommentController {
             @RequestBody @Valid TripCommentAddRequest tripCommentAddRequest,
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
-            return ResponseEntity.ok(tripCommentService.insertTripComment(
-                    tripId,
-                    tripCommentAddRequest,
-                    principalDetails
-            ));
+        return ResponseEntity.ok(tripCommentService.insertTripComment(
+                tripId,
+                tripCommentAddRequest,
+                principalDetails
+        ));
     }
 
     @PatchMapping("/{commentId}")
@@ -56,6 +56,6 @@ public class TripCommentController {
             @AuthenticationPrincipal PrincipalDetails principalDetails
     ) {
         tripCommentService.deleteTripComment(tripId, commentId, principalDetails);
-        return ResponseEntity.ok().body(commentId+"번 댓글 삭제 성공");
+        return ResponseEntity.ok().body(commentId + "번 댓글 삭제 성공");
     }
 }

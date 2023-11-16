@@ -24,9 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * JWT를 이용한 로그인 인증
- */
 @Component
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -48,16 +45,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         this.userRepository = userRepository;
     }
 
-    /**
-     * 로그인 인증 시도
-     */
     @Override
     public Authentication attemptAuthentication(
             HttpServletRequest request,
             HttpServletResponse response
     ) throws AuthenticationException {
         try {
-            // 요청된 JSON 데이터를 객체로 파싱
             ObjectMapper objectMapper = new ObjectMapper();
             LoginRequest loginRequest = objectMapper.readValue(request.getInputStream(), LoginRequest.class);
 
@@ -67,7 +60,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 throw new BadCredentialsException("이메일 또는 비밀번호가 잘못되었습니다.");
             }
 
-            // 로그인할 때 입력한 email과 password를 가지고 authenticationToken를 생성
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                     loginRequest.email(),
                     loginRequest.password(),
@@ -77,9 +69,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             return this.getAuthenticationManager().authenticate(authenticationToken);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (AuthenticationException e){
+        } catch (AuthenticationException e) {
             try {
-                //로그인시 발생한 에러를 unsuccessfulAuthentication에서 처리
                 unsuccessfulAuthentication(request, response, e);
             } catch (IOException | ServletException ex) {
                 throw new RuntimeException(ex);
@@ -88,10 +79,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         }
     }
 
-    /**
-     * 인증에 성공했을 때 사용
-     * JWT Token을 생성해서 쿠키에 넣는다.
-     */
     @Override
     protected void successfulAuthentication(
             HttpServletRequest request,
@@ -101,12 +88,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     ) throws IOException {
         User user = ((PrincipalDetails) authResult.getPrincipal()).getUser();
         String token = jwtProvider.createToken(user);
-        // 쿠키 생성
         Cookie cookie = new Cookie(JwtProperties.COOKIE_NAME, token);
-        cookie.setMaxAge(JwtProperties.ACCESS_TOKEN_EXPIRATION_TIME / 1000 * 2); // 쿠키의 만료시간은 jwt토큰의 만료시간보다 김 -> setMaxAge는 초단위
+        cookie.setMaxAge(JwtProperties.ACCESS_TOKEN_EXPIRATION_TIME / 1000 * 2);
         cookie.setPath("/");
         response.addCookie(cookie);
-        response.sendRedirect("/");  //발급후 redirect로 이동
+        response.sendRedirect("/");
     }
 
     @Override
@@ -115,7 +101,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response,
             AuthenticationException failed
     ) throws IOException, ServletException {
-        //super.unsuccessfulAuthentication(request, response, failed);
         authenticationFailureHandler.onAuthenticationFailure(request, response, failed);
     }
 }
