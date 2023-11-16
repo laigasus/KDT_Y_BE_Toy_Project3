@@ -2,29 +2,23 @@ package com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub;
 
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Activity;
 import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
-import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
 public record ActivityDTO(
-        @Schema(example = "버스")
         String transportEnum,
 
-        @Schema( example = "서울")
         String departurePlace,
 
-        @Schema( example = "속초")
         String arrivalPlace,
 
-        @Schema(example = " 서울에서 버스 타고 속초 도착후 점심 먹고 체크인 대기")
         String description,
 
-        @Schema(example = "2023-11-11-9:30")
         String activityStart,
 
-        @Schema( example = "2023-11-11-12:30")
-        String activityEnd
+        String activityEnd,
 
+        String arrivalAddress
 ) {
     private static ActivityDTO fromEntity(Activity activity) {
         return new ActivityDTO(
@@ -33,7 +27,9 @@ public record ActivityDTO(
                 activity.getArrivalPlace(),
                 activity.getDescription(),
                 TimeUtils.formatDateTime(activity.getActivityTimeSchedule().getStartTime()),
-                TimeUtils.formatDateTime(activity.getActivityTimeSchedule().getEndTime())
+                TimeUtils.formatDateTime(activity.getActivityTimeSchedule().getEndTime()),
+                activity.getArrivalAddress()
+
         );
     }
 

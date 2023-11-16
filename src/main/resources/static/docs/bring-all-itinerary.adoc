@@ -1,0 +1,11 @@
+== Bring All Itinerary(모든 여정 조회)
+
+=== HTTP 요청
+include::{snippets}/bring-all-itinerary/http-request.adoc[]
+
+=== HTTP 응답
+include::{snippets}/bring-all-itinerary/http-response.adoc[]
+
+=== 응답 필드
+include::{snippets}/bring-all-itinerary/response-fields.adoc[]
+

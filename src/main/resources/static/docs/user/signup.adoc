@@ -1,0 +1,19 @@
+== 사용자 회원가입 API
+
+사용자 회원가입을 위한 API에 대한 문서입니다.
+
+=== HTTP 요청
+
+include::{snippets}/signup/http-request.adoc[]
+
+=== HTTP 응답
+
+include::{snippets}/signup/http-response.adoc[]
+
+=== 요청 필드
+
+include::{snippets}/signup/request-fields.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/signup/response-fields.adoc[]

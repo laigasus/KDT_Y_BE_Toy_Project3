@@ -1,0 +1,6 @@
+
+
+include::get-all-trips.adoc[]
+include::get-trip-by-id.adoc[]
+include::edit-trip.adoc[]
+include::add-trip-one.adoc[]

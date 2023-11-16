@@ -1,0 +1,4 @@
+### 댓글 삭제
+DELETE http://localhost:8080/trip/1/comments/7
+Content-Type: application/json
+

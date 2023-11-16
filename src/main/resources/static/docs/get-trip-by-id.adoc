@@ -1,0 +1,17 @@
+== 여행 일정 단건 조회 API
+
+=== HTTP 요청
+
+include::{snippets}/get-trip-by-id/http-request.adoc[]
+
+=== HTTP 응답
+
+include::{snippets}/get-trip-by-id/http-response.adoc[]
+
+=== 경로 매개변수
+
+include::{snippets}/get-trip-by-id/path-parameters.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/get-trip-by-id/response-fields.adoc[]

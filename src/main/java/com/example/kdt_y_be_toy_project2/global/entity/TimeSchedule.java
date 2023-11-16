@@ -2,6 +2,7 @@ package com.example.kdt_y_be_toy_project2.global.entity;
 
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Embeddable
 public class TimeSchedule {
     private LocalDateTime startTime;

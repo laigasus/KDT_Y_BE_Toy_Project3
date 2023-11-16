@@ -1,7 +1,10 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.entity;
 
 import com.example.kdt_y_be_toy_project2.global.entity.TimeSchedule;
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,10 +19,8 @@ public class Accommodation {
     private String accommodationName;
 
     @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "startTime", column = @Column(name = "check_in")),
-            @AttributeOverride(name = "endTime", column = @Column(name = "check_out"))
-    })
+    @AttributeOverride(name = "startTime", column = @Column(name = "check_in"))
+    @AttributeOverride(name = "endTime", column = @Column(name = "check_out"))
     private TimeSchedule accommodationTimeSchedule;
 
     @Builder

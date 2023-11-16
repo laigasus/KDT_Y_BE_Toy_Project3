@@ -1,0 +1,13 @@
+== 특정 여정 일정 조회 API
+
+=== HTTP 요청
+include::{snippets}/get-one-ItineraryId/http-request.adoc[]
+
+=== HTTP 응답
+include::{snippets}/get-one-ItineraryId/http-response.adoc[]
+
+=== 경로 변수
+include::{snippets}/get-one-ItineraryId/path-parameters.adoc[]
+
+=== 응답 필드
+include::{snippets}/get-one-ItineraryId/response-fields.adoc[]

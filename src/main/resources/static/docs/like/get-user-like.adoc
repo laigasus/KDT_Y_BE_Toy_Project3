@@ -1,0 +1,11 @@
+== 사용자 좋아요 목록 조회 API
+
+사용자가 좋아하는 여행 목록을 조회하는 API에 대한 문서입니다.
+
+=== HTTP 응답
+
+include::{snippets}/get-user-like/http-response.adoc[]
+
+=== 응답 필드
+
+include::{snippets}/get-user-like/response-fields.adoc[]

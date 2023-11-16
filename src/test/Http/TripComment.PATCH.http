@@ -1,0 +1,7 @@
+### 댓글 수정
+PATCH http://localhost:8080/trip/1/comments/17
+Content-Type: application/json
+
+{
+  "tripComment": "즐거운여행입니다. 댓글수정합니다. 12:56"
+}
