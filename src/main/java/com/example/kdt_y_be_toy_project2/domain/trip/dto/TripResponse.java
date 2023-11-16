@@ -26,7 +26,9 @@ public class TripResponse {
             @NotNull
             String tripDestinationEnum,
             @NotNull String createdAt,
-            @NotNull String updatedAt) {
+            @NotNull String updatedAt,
+            @NotNull Integer likes
+    ) {
 
         public static TripInfo fromEntity(Trip trip) {
             return new TripInfo(
@@ -39,7 +41,8 @@ public class TripResponse {
                     ),
                     trip.getTripDestinationEnum().getMethod(),
                     TimeUtils.formatDateTime(trip.getCreatedAt()),
-                    TimeUtils.formatDateTime(trip.getUpdatedAt())
+                    TimeUtils.formatDateTime(trip.getUpdatedAt()),
+                    trip.getUserLikes().size()
             );
         }
     }
@@ -86,13 +89,15 @@ public class TripResponse {
             @NotNull
             @Schema(example = "강원도 여행")
             String tripName,
-            @NotNull String updatedAt) {
+            @NotNull String updatedAt,
+            @NotNull Integer likes) {
 
         public static TripByKeyWord fromEntity(Trip trip) {
             return new TripByKeyWord(
                     trip.getTripId(),
                     trip.getTripName(),
-                    TimeUtils.formatDateTime(trip.getUpdatedAt())
+                    TimeUtils.formatDateTime(trip.getUpdatedAt()),
+                    trip.getUserLikes().size()
             );
         }
     }
