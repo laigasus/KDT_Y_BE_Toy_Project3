@@ -1,0 +1,25 @@
+== 사용자 테스트 API
+
+사용자 테스트를 위한 API에 대한 문서입니다.
+
+=== HTTP 요청
+
+`GET /user/test`를 사용하여 사용자 정보를 테스트합니다.
+
+include::{snippets}/test-user/http-request.adoc[]
+
+=== HTTP 응답
+
+정상적인 요청의 경우, 사용자 정보가 JSON 형식으로 반환됩니다.
+
+include::{snippets}/test-user/http-response.adoc[]
+
+=== 요청 필드
+
+이 API는 요청 본문 없이 URL을 통해 요청됩니다.
+
+=== 응답 필드
+
+응답 본문에는 사용자의 이메일과 이름이 포함됩니다.
+
+include::{snippets}/test-user/response-fields.adoc[]
