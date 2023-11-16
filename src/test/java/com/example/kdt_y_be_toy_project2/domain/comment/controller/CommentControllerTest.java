@@ -2,7 +2,6 @@ package com.example.kdt_y_be_toy_project2.domain.comment.controller;
 
 import com.example.kdt_y_be_toy_project2.domain.comment.dto.*;
 import com.example.kdt_y_be_toy_project2.domain.comment.service.TripCommentService;
-import com.example.kdt_y_be_toy_project2.domain.like.dto.UserLikeGetTripsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,7 +33,6 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -92,23 +90,12 @@ public class CommentControllerTest {
                                 fieldWithPath("[].username").type(JsonFieldType.STRING).description("사용자 이름"),
                                 fieldWithPath("[].tripComment").type(JsonFieldType.STRING).description("여행 코멘트"),
                                 fieldWithPath("[].updatedAt").type(JsonFieldType.STRING).description("코멘트 수정 시간")
-                        )))
-                .andDo(print());
+                        )));
     }
 
 
     @Test
     public void addCommentTest() throws Exception {
-//        User testUser = User.builder()
-//                .email("liyusang1@naver.com")
-//                .username("liyusang1")
-//                .password("123456")
-//                .authority("ROLE_USER")
-//                .build();
-
-//        String jwtToken = JwtUtils.createToken(testUser);
-
-//        Cookie jwtCookie = new Cookie(JwtProperties.COOKIE_NAME, jwtToken);
 
         TripCommentAddRequest request = new TripCommentAddRequest("즐거운여행입니다. 여행테스트");
 
@@ -138,8 +125,7 @@ public class CommentControllerTest {
                                 fieldWithPath("username").type(JsonFieldType.STRING).description("사용자 이름"),
                                 fieldWithPath("tripComment").type(JsonFieldType.STRING).description("여행 코멘트"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("코멘트 생성 시간")
-                        )))
-                .andDo(print());
+                        )));
     }
 
 
@@ -179,8 +165,7 @@ public class CommentControllerTest {
                                 fieldWithPath("userId").type(JsonFieldType.NUMBER).description("사용자 ID"),
                                 fieldWithPath("tripComment").type(JsonFieldType.STRING).description("수정된 여행 코멘트"),
                                 fieldWithPath("createdAt").type(JsonFieldType.STRING).description("코멘트 수정 시간")
-                        )))
-                .andDo(print());
+                        )));
     }
 
     @Test
@@ -199,8 +184,7 @@ public class CommentControllerTest {
                                 parameterWithName("tripId").description("여행 ID"),
                                 parameterWithName("commentId").description("삭제할 코멘트 ID")
                         ),
-                        responseBody()))
-                .andDo(print());
+                        responseBody()));
     }
 
 

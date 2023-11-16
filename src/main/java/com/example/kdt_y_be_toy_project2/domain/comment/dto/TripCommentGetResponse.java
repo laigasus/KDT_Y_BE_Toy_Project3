@@ -1,13 +1,12 @@
 package com.example.kdt_y_be_toy_project2.domain.comment.dto;
 
 import com.example.kdt_y_be_toy_project2.domain.comment.entity.TripComment;
-import com.example.kdt_y_be_toy_project2.domain.trip.entity.Trip;
-import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
 import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 public record TripCommentGetResponse(
         @NotNull Long tripCommentId,
@@ -26,7 +25,9 @@ public record TripCommentGetResponse(
                 tripComment.getUser().getEmail(),
                 tripComment.getUser().getUsername(),
                 tripComment.getTripComment(),
-                TimeUtils.formatDateTime(tripComment.getUpdatedAt())
+                Optional.ofNullable(tripComment.getUpdatedAt())
+                        .map(TimeUtils::formatDateTime)
+                        .orElse(TimeUtils.formatDateTime(LocalDateTime.now()))
         );
     }
 }

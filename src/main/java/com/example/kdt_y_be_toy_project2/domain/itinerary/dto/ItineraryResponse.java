@@ -1,8 +1,8 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.dto;
 
+import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ActivityDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ResidenceDTO;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationDTO;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.global.dto.TimeScheduleDTO;
 import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
@@ -10,7 +10,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public record ItineraryResponse(
         @Min(1L)
@@ -46,8 +48,12 @@ public record ItineraryResponse(
                         itinerary.getTimeSchedule().getEndTime(),
                         true
                 ),
-                TimeUtils.formatDateTime(itinerary.getCreatedAt()),
-                TimeUtils.formatDateTime(itinerary.getUpdatedAt())
+                Optional.ofNullable(itinerary.getCreatedAt())
+                        .map(TimeUtils::formatDateTime)
+                        .orElse(TimeUtils.formatDateTime(LocalDateTime.now())),
+                Optional.ofNullable(itinerary.getUpdatedAt())
+                        .map(TimeUtils::formatDateTime)
+                        .orElse(TimeUtils.formatDateTime(LocalDateTime.now()))
         );
     }
 }

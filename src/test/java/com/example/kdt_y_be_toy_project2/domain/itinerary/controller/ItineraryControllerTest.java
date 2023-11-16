@@ -1,19 +1,10 @@
 package com.example.kdt_y_be_toy_project2.domain.itinerary.controller;
 
-import com.example.kdt_y_be_toy_project2.domain.itinerary.MockItineraryRequest;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.MockItineraryResponse;
+
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryRequest;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryResponse;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationDTO;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ActivityDTO;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ResidenceDTO;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Accommodation;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Activity;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Residence;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.TransportEnum;
 import com.example.kdt_y_be_toy_project2.domain.itinerary.service.ItineraryService;
-import com.example.kdt_y_be_toy_project2.global.dto.TimeScheduleDTO;
-import com.example.kdt_y_be_toy_project2.global.entity.TimeSchedule;
+import com.example.kdt_y_be_toy_project2.global.dummy.DummyObjectForController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,7 +24,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
-public class ItineraryControllerTest {
+public class ItineraryControllerTest extends DummyObjectForController {
 
     @MockBean
     ItineraryService itineraryService;
@@ -59,9 +49,7 @@ public class ItineraryControllerTest {
 
     private List<ItineraryRequest> itineraryRequestList = new ArrayList<>();
 
-    private MockItineraryResponse mockItineraryResponse;
 
-    private MockItineraryRequest mockItineraryRequest;
 
     private MockMvc mockMvc;
 
@@ -83,14 +71,14 @@ public class ItineraryControllerTest {
     }
 
 
-
     @Test
     void addItineraryTest() throws Exception {
-        ItineraryResponse mockResponse2 = mockItineraryResponse.create();
-        Mockito.when(itineraryService.insertItineraries(anyLong(), anyList()))
-                .thenReturn(List.of(mockResponse2));
+        ItineraryResponse mockResponse = dummyItineraryResponse();
 
-        itineraryRequestList.add(mockItineraryRequest.create());
+        Mockito.when(itineraryService.insertItineraries(anyLong(), anyList()))
+                .thenReturn(List.of(mockResponse));
+
+        itineraryRequestList.add(dummyItineraryRequest());
 
 
         this.mockMvc.perform(post("/itinerary/{id}", 1)
@@ -111,6 +99,7 @@ public class ItineraryControllerTest {
                                 fieldWithPath("[].activity[].transportEnum").description("교통 수단"),
                                 fieldWithPath("[].activity[].departurePlace").description("활동 출발 장소"),
                                 fieldWithPath("[].activity[].arrivalPlace").description("활동 도착 장소"),
+                                fieldWithPath("[].activity[].arrivalAddress").description("도착지 주소"),
                                 fieldWithPath("[].activity[].description").description("활동 설명"),
                                 fieldWithPath("[].activity[].activityTimeSchedule.startTime").description("활동 시작 시간"),
                                 fieldWithPath("[].activity[].activityTimeSchedule.endTime").description("활동 종료 시간")
@@ -122,6 +111,7 @@ public class ItineraryControllerTest {
                                 subsectionWithPath("[].accommodation").description("숙박 시설 목록"),
                                 subsectionWithPath("[].residence").description("거주지 목록"),
                                 subsectionWithPath("[].activity").description("활동 목록"),
+                                fieldWithPath("[].activity[].arrivalAddress").type(JsonFieldType.STRING).description("활동의 도착지 주소").optional(),
                                 subsectionWithPath("[].timeSchedule").description("전체 여행 일정 시간표"),
                                 fieldWithPath("[].createdAt").type(JsonFieldType.STRING).description("생성된 날짜 및 시간"),
                                 fieldWithPath("[].updatedAt").type(JsonFieldType.STRING).description("마지막으로 업데이트된 날짜 및 시간")
@@ -133,7 +123,7 @@ public class ItineraryControllerTest {
     @Test
     void bringAllItineraryTest() throws Exception {
 
-        ItineraryResponse mockResponse = mockItineraryResponse.create();
+        ItineraryResponse mockResponse = dummyItineraryResponse();
         List<ItineraryResponse> mockList = new ArrayList<>();
         mockList.add(mockResponse);
 
@@ -161,6 +151,7 @@ public class ItineraryControllerTest {
                                 fieldWithPath("[].activity[].description").type(JsonFieldType.STRING).description("활동 설명"),
                                 fieldWithPath("[].activity[].activityStart").type(JsonFieldType.STRING).description("활동 시작 시간"),
                                 fieldWithPath("[].activity[].activityEnd").type(JsonFieldType.STRING).description("활동 종료 시간"),
+                                fieldWithPath("[].activity[].arrivalAddress").type(JsonFieldType.STRING).description("활동의 도착지 주소").optional(),
                                 fieldWithPath("[].timeSchedule").type(JsonFieldType.OBJECT).description("일정 시간표"),
                                 fieldWithPath("[].timeSchedule.startTime").type(JsonFieldType.STRING).description("일정 시작 시간"),
                                 fieldWithPath("[].timeSchedule.endTime").type(JsonFieldType.STRING).description("일정 종료 시간"),
@@ -173,14 +164,15 @@ public class ItineraryControllerTest {
     @Test
     void bringOneItineraryTest() throws Exception {
 
-        ItineraryResponse mockResponse = mockItineraryResponse.create();
+        ItineraryResponse mockResponse = dummyItineraryResponse();
 
         Mockito.when(itineraryService.selectItinerary(anyLong())).thenReturn(mockResponse);
 
 
         this.mockMvc.perform(RestDocumentationRequestBuilders.get("/itinerary/{id}", 3).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andDo(document("get-one-ItineraryId", pathParameters(
+                .andDo(document("get-one-ItineraryId",
+                        pathParameters(
                                 parameterWithName("id").description("조회하려는 여행 일정의 ID")
                         ),
                         responseFields(
@@ -199,6 +191,7 @@ public class ItineraryControllerTest {
                                 fieldWithPath("activity[].description").description("활동 설명"),
                                 fieldWithPath("activity[].activityStart").description("활동 시작 시간"),
                                 fieldWithPath("activity[].activityEnd").description("활동 종료 시간"),
+                                fieldWithPath("activity[].arrivalAddress").type(JsonFieldType.STRING).description("활동의 도착지 주소"),
                                 fieldWithPath("timeSchedule.startTime").description("일정 시작 시간"),
                                 fieldWithPath("timeSchedule.endTime").description("일정 종료 시간"),
                                 fieldWithPath("createdAt").description("생성된 날짜 및 시간"),
@@ -209,11 +202,11 @@ public class ItineraryControllerTest {
     @Test
     void editItineraryTest() throws Exception {
         Mockito.when(itineraryService.updateItinerary(anyLong(), any(ItineraryRequest.class)))
-                .thenReturn(mockItineraryResponse.create());
+                .thenReturn(dummyItineraryResponse());
 
         this.mockMvc.perform(patch("/itinerary/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(mockItineraryRequest.create())))
+                        .content(objectMapper.writeValueAsString(dummyItineraryRequest())))
                 .andExpect(status().isOk())
                 .andDo(document("patch-itinerary-id",
                         requestFields(
@@ -231,7 +224,9 @@ public class ItineraryControllerTest {
                                 fieldWithPath("activity[].arrivalPlace").description("도착 장소"),
                                 fieldWithPath("activity[].description").description("활동 설명"),
                                 fieldWithPath("activity[].activityTimeSchedule.startTime").description("활동 시작 시간"),
-                                fieldWithPath("activity[].activityTimeSchedule.endTime").description("활동 종료 시간")
+                                fieldWithPath("activity[].activityTimeSchedule.endTime").description("활동 종료 시간"),
+                                fieldWithPath("activity[].arrivalAddress").description("활동의 도착지 주소").optional()
+
                         ),
                         responseFields(
                                 fieldWithPath("id").description("여행 일정의 고유 ID"),
@@ -249,6 +244,7 @@ public class ItineraryControllerTest {
                                 fieldWithPath("activity[].description").description("활동 설명"),
                                 fieldWithPath("activity[].activityStart").description("활동 시작 시간"),
                                 fieldWithPath("activity[].activityEnd").description("활동 종료 시간"),
+                                fieldWithPath("activity[].arrivalAddress").type(JsonFieldType.STRING).description("활동의 도착지 주소").optional(),
                                 fieldWithPath("timeSchedule.startTime").description("일정 시작 시간"),
                                 fieldWithPath("timeSchedule.endTime").description("일정 종료 시간"),
                                 fieldWithPath("createdAt").description("생성된 날짜 및 시간"),

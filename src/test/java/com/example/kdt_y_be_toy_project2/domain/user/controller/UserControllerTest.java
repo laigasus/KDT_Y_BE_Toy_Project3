@@ -5,6 +5,7 @@ import com.example.kdt_y_be_toy_project2.domain.user.dto.CreateUserRequest;
 import com.example.kdt_y_be_toy_project2.domain.user.dto.CreateUserResponse;
 import com.example.kdt_y_be_toy_project2.domain.user.entity.User;
 import com.example.kdt_y_be_toy_project2.domain.user.service.UserService;
+import com.example.kdt_y_be_toy_project2.global.dummy.DummyObjectForController;
 import com.example.kdt_y_be_toy_project2.global.security.PrincipalDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -23,6 +24,7 @@ import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.security.test.context.support.WithUserDetails;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -39,8 +41,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
+@WithUserDetails(value = "liyusang1@naver.com")
 @ExtendWith(RestDocumentationExtension.class)
-public class UserControllerTest {
+public class UserControllerTest extends DummyObjectForController {
 
     @Autowired
     private MockMvc mockMvc;
@@ -70,8 +73,8 @@ public class UserControllerTest {
 
     @Test
     public void signUpTest() throws Exception {
-        CreateUserRequest request = new CreateUserRequest("test@example.com", "testuser", "password123");
-        CreateUserResponse response = new CreateUserResponse("test@example.com", "testuser");
+        CreateUserRequest request = new CreateUserRequest("liyusang1@naver.com", "liyusang1", "123456");
+        CreateUserResponse response = new CreateUserResponse("liyusang1@naver.com", "liyusang1");
 
         when(userService.signup(any(CreateUserRequest.class))).thenReturn(response);
 
@@ -96,13 +99,10 @@ public class UserControllerTest {
     public void testUserTest() throws Exception {
         // User 객체 생성
         User testUser = User.builder()
-                .email("test@example.com")
-                .username("testuser")
-                .password("password123")
+                .email("liyusang1@naver.com")
+                .username("liyusang1")
+                .password("123456")
                 .build();
-
-        // PrincipalDetails 객체 생성
-        PrincipalDetails principalDetails = new PrincipalDetails(testUser);
 
         // 테스트를 위한 JSON 형태의 응답 생성
         CreateUserResponse expectedResponse = new CreateUserResponse(testUser.getEmail(), testUser.getUsername());

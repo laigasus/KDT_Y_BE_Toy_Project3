@@ -1,18 +1,9 @@
 package com.example.kdt_y_be_toy_project2.domain.trip.controller;
 
-import com.example.kdt_y_be_toy_project2.domain.comment.dto.TripCommentGetResponse;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.ItineraryResponse;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.AccommodationDTO;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ActivityDTO;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.dto.sub.ResidenceDTO;
-import com.example.kdt_y_be_toy_project2.domain.itinerary.entity.Itinerary;
 import com.example.kdt_y_be_toy_project2.domain.trip.dto.TripRequest;
 import com.example.kdt_y_be_toy_project2.domain.trip.dto.TripResponse;
-import com.example.kdt_y_be_toy_project2.domain.trip.entity.TripDestinationEnum;
 import com.example.kdt_y_be_toy_project2.domain.trip.service.TripService;
-import com.example.kdt_y_be_toy_project2.global.dto.TimeScheduleDTO;
-import com.example.kdt_y_be_toy_project2.global.entity.TimeSchedule;
-import com.example.kdt_y_be_toy_project2.global.util.TimeUtils;
+import com.example.kdt_y_be_toy_project2.global.dummy.DummyObjectForController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +24,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -53,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @ExtendWith(RestDocumentationExtension.class)
-public class TripControllerTest {
+public class TripControllerTest extends DummyObjectForController {
 
     @Autowired
     private MockMvc mockMvc;
@@ -62,7 +51,6 @@ public class TripControllerTest {
     TripService tripService;
 
     ObjectMapper objectMapper = new ObjectMapper();
-
 
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext, RestDocumentationContextProvider restDocument) {
@@ -81,92 +69,15 @@ public class TripControllerTest {
     }
 
 
-    private static TripRequest createSampleTripRequest() {
-        String tripName = "강원도 여행";
-        TimeSchedule timeSchedule = new TimeSchedule(
-                LocalDateTime.now(),
-                LocalDateTime.now().plusDays(1));
-        TripDestinationEnum tripDestinationEnum = TripDestinationEnum.DOMESTIC;
-        List<Itinerary> itineraries = Collections.emptyList();
 
-        return new TripRequest(
-                tripName,
-                timeSchedule,
-                tripDestinationEnum,
-                itineraries);
-    }
-
-    private static TripResponse.TripInfo createMockTripsResponse() {
-        return new TripResponse.TripInfo(
-                1L,
-                "강원도 여행",
-                new TimeScheduleDTO(
-                        LocalDateTime.now(),
-                        LocalDateTime.now().plusDays(1),
-                        true
-                ),
-                "DOMESTIC",
-                TimeUtils.formatDateTime(LocalDateTime.now()),
-                TimeUtils.formatDateTime(LocalDateTime.now())
-        );
-    }
-
-    private static TripResponse.TripById mockTripById() {
-        // 1. TripInfo
-        TripResponse.TripInfo mockTripInfo = new TripResponse.TripInfo(
-                1L, // tripId
-                "강원도 여행", // tripName
-                new TimeScheduleDTO(LocalDateTime.of(2023, 10, 27, 0, 0), LocalDateTime.of(2023, 10, 27, 23, 59), true), // timeSchedule
-                "국내", // tripDestinationEnum
-                TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 17, 23)), // createdAt
-                TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 17, 23)) // updatedAt
-        );
-
-// 2. ItineraryResponse 리스트
-        List<ItineraryResponse> mockItineraries = List.of(
-                new ItineraryResponse(
-                        1L, // id
-                        "옥크나이트와 떠나는 코딩숙박", // itineraryName
-                        1L, // tripId
-                        List.of(new AccommodationDTO("string", TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)), TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)))), // accommodation
-                        List.of(new ResidenceDTO("string", TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)), TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)))), // residence
-                        List.of(new ActivityDTO("버스", "string", "string", "string", TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)), TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 11, 47)), "집")), // activity
-                        new TimeScheduleDTO(LocalDateTime.of(2023, 10, 27, 0, 0), LocalDateTime.of(2023, 10, 27, 23, 59), true), // timeSchedule
-                        TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 17, 40)), // createdAt
-                        TimeUtils.formatDateTime(LocalDateTime.of(2023, 10, 27, 20, 47)) // updatedAt
-                )
-                // 여기서 추가 ItineraryResponse 객체를 만들 수 있습니다.
-        );
-
-// 3. TripCommentGetResponse 리스트
-        List<TripCommentGetResponse> mockTripComments = List.of(
-                new TripCommentGetResponse(
-                        1L,
-                        1L,
-                        "강원도 여행",
-                        "user@example.com",
-                        "username",
-                        "여행에 대한 댓글",
-                        TimeUtils.formatDateTime(LocalDateTime.now())
-                )
-        );
-
-// 4. 최종 TripResponse.TripById 객체 생성
-        TripResponse.TripById mockResponse = new TripResponse.TripById(
-                mockTripInfo,
-                mockItineraries,
-                mockTripComments
-        );
-        return mockResponse;
-    }
 
 
     @Test
     public void addTripTest() throws Exception {
-        TripRequest sampleTripRequest = createSampleTripRequest();
+        TripRequest sampleTripRequest = dummyTripRequest();
         String tripRequestJson = objectMapper.writeValueAsString(sampleTripRequest);
 
-        TripResponse.TripInfo mockTripInfo = createMockTripsResponse();
+        TripResponse.TripInfo mockTripInfo = dummyTripResponseTripInfo();
 
         List<String> itinerariesNames = List.of("일정1", "일정2"); // 예시 일정 이름 목록
         TripResponse.AllTrips mockAllTrips = new TripResponse.AllTrips(mockTripInfo, itinerariesNames);
@@ -194,6 +105,7 @@ public class TripControllerTest {
                                 fieldWithPath("tripInfo.tripDestinationEnum").description("여행지 유형"),
                                 fieldWithPath("tripInfo.createdAt").description("생성된 날짜 및 시간"),
                                 fieldWithPath("tripInfo.updatedAt").description("마지막으로 업데이트된 날짜 및 시간"),
+                                fieldWithPath("tripInfo.likes").description("여행에 대한 좋아요 수").optional(),
                                 fieldWithPath("itinerariesNames").description("여행 일정 이름 목록")
                         )
                 ));
@@ -203,7 +115,7 @@ public class TripControllerTest {
     @Test
     public void bringAllTripsTest() throws Exception {
         List<TripResponse.AllTrips> mockResponse = List.of(
-                new TripResponse.AllTrips(createMockTripsResponse(), List.of("일정1", "일정2"))
+                new TripResponse.AllTrips(dummyTripResponseTripInfo(), List.of("일정1", "일정2"))
         );
 
         Mockito.when(tripService.selectTrips()).thenReturn(mockResponse);
@@ -218,6 +130,7 @@ public class TripControllerTest {
                                 fieldWithPath("[].tripInfo.timeSchedule.endTime").description("여행 종료 시간"),
                                 fieldWithPath("[].tripInfo.tripDestinationEnum").description("여행지 유형"),
                                 fieldWithPath("[].tripInfo.createdAt").description("생성된 날짜 및 시간"),
+                                fieldWithPath("[]tripInfo.likes").description("여행에 대한 좋아요 수").optional(),
                                 fieldWithPath("[].tripInfo.updatedAt").description("마지막으로 업데이트된 날짜 및 시간"),
                                 fieldWithPath("[].itinerariesNames").description("여행 일정 이름 목록").type(JsonFieldType.ARRAY)
                         )
@@ -226,7 +139,7 @@ public class TripControllerTest {
 
     @Test
     public void bringTripByIdTest() throws Exception {
-        TripResponse.TripById mockResponse = mockTripById();
+        TripResponse.TripById mockResponse = dummyTripResponseTripById();
 
         Mockito.when(tripService.selectTrip(1L)).thenReturn(mockResponse);
 
@@ -246,6 +159,7 @@ public class TripControllerTest {
                                 fieldWithPath("tripInfo.tripDestinationEnum").description("여행지 유형"),
                                 fieldWithPath("tripInfo.createdAt").description("생성된 날짜 및 시간"),
                                 fieldWithPath("tripInfo.updatedAt").description("마지막으로 업데이트된 날짜 및 시간"),
+                                fieldWithPath("tripInfo.likes").description("여행에 대한 좋아요 수").optional(),
                                 subsectionWithPath("itineraries").description("여행 일정 목록"),
                                 subsectionWithPath("tripComments").description("여행 댓글 목록")
                         )
@@ -257,13 +171,13 @@ public class TripControllerTest {
     public void editTripTest() throws Exception {
 
 
-// 요청 데이터 준비
+        // 요청 데이터 준비
         Long tripId = 1L;
-        TripRequest sampleTripRequest = createSampleTripRequest();
+        TripRequest sampleTripRequest = dummyTripRequest();
         String tripRequestJson = objectMapper.writeValueAsString(sampleTripRequest);
 
         // Mock 서비스 설정
-        TripResponse.TripById mockResponse = mockTripById();
+        TripResponse.TripById mockResponse = dummyTripResponseTripById();
         Mockito.when(tripService.updateTrip(Mockito.eq(tripId), Mockito.any(TripRequest.class))).thenReturn(mockResponse);
 
         this.mockMvc.perform(patch("/trip/{id}", 1)
@@ -288,6 +202,7 @@ public class TripControllerTest {
                                 fieldWithPath("tripInfo.timeSchedule.endTime").description("여행 종료 시간"),
                                 fieldWithPath("tripInfo.tripDestinationEnum").description("여행지 유형"),
                                 fieldWithPath("tripInfo.createdAt").description("생성된 날짜 및 시간"),
+                                fieldWithPath("tripInfo.likes").description("여행에 대한 좋아요 수").optional(),
                                 fieldWithPath("tripInfo.updatedAt").description("마지막으로 업데이트된 날짜 및 시간"),
                                 subsectionWithPath("itineraries").description("여행 일정 목록"),
                                 fieldWithPath("itineraries[].id").description("일정 ID"),

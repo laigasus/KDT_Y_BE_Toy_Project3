@@ -10,7 +10,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class TripResponse {
 
@@ -40,8 +42,12 @@ public class TripResponse {
                             true
                     ),
                     trip.getTripDestinationEnum().getMethod(),
-                    TimeUtils.formatDateTime(trip.getCreatedAt()),
-                    TimeUtils.formatDateTime(trip.getUpdatedAt()),
+                    Optional.ofNullable(trip.getCreatedAt())
+                            .map(TimeUtils::formatDateTime)
+                            .orElse(TimeUtils.formatDateTime(LocalDateTime.now())),
+                    Optional.ofNullable(trip.getUpdatedAt())
+                            .map(TimeUtils::formatDateTime)
+                            .orElse(TimeUtils.formatDateTime(LocalDateTime.now())),
                     trip.getUserLikes().size()
             );
         }
@@ -96,7 +102,9 @@ public class TripResponse {
             return new TripByKeyWord(
                     trip.getTripId(),
                     trip.getTripName(),
-                    TimeUtils.formatDateTime(trip.getUpdatedAt()),
+                    Optional.ofNullable(trip.getUpdatedAt())
+                            .map(TimeUtils::formatDateTime)
+                            .orElse(TimeUtils.formatDateTime(LocalDateTime.now())),
                     trip.getUserLikes().size()
             );
         }
