@@ -58,6 +58,8 @@ public class ItineraryService {
     // 여정 수정
     @Transactional
     public ItineraryResponse updateItinerary(long id, ItineraryRequest itineraryRequest) {
+        itineraryRequest.toEntity();
+
         return itineraryRepository.findById(id).map(itinerary -> {
             itinerary.modifyInfo(itineraryRequest);
             return ItineraryResponse.fromEntity(itinerary);
