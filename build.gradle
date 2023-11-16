@@ -39,11 +39,12 @@ dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor' // (3)
-    testImplementation('org.junit.jupiter:junit-jupiter-api:5.8.2')
-    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.8.2')
-    
-    
-    
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.9.1')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine:5.9.1')
+
+
+
+
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // jjwt
@@ -67,6 +68,9 @@ dependencies {
 
     // dotenv-java
     implementation 'io.github.cdimascio:java-dotenv:+'
+
+    // spring security test
+    implementation 'org.springframework.security:spring-security-test:+'
     
 }
 
